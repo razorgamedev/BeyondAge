@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BeyondAge.Entities;
+using BeyondAge.Graphics;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -8,10 +10,11 @@ namespace BeyondAge
     {
         GraphicsDeviceManager graphics;
         SpriteBatch batch;
-        Texture2D test;
-
+        World world;
+        
         public static readonly int Width = 1280;
         public static readonly int Height = 720;
+        public static AssetCatalog Assets { get; private set; }
 
         public BeyondAge()
         {
@@ -31,6 +34,9 @@ namespace BeyondAge
         {
             // TODO: Add your initialization logic here
 
+            world = new World();
+            world.Register(new SpriteRenderer());
+
             base.Initialize();
         }
         
@@ -38,7 +44,11 @@ namespace BeyondAge
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             batch = new SpriteBatch(GraphicsDevice);
-            test = Content.Load<Texture2D>("images/tilesheet_1");
+            Assets = new AssetCatalog(Content);
+
+            var test = world.Create("player");
+            test.Add<Body>(new Body { X = 128, Y = 128, Width = 8 * Constants.SCALE, Height = 16 * Constants.SCALE });
+            test.Add<Sprite>(new Sprite(Assets.GetTexture("character_sheet"), new Rectangle(0, 0, 8, 16)));
 
             // TODO: use this.Content to load your game content here
         }
@@ -48,22 +58,24 @@ namespace BeyondAge
             // TODO: Unload any non ContentManager content here
         }
 
-        protected override void Update(GameTime gameTime)
+        protected override void Update(GameTime time)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
             // TODO: Add your update logic here
+            world.Update(time);
 
-            base.Update(gameTime);
+            GameInput.Self.Update();
+            base.Update(time);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            batch.Begin();
-
+            batch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp);
+            world.Draw(batch);
             batch.End();
 
             base.Draw(gameTime);
