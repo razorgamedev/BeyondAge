@@ -9,5 +9,7 @@ namespace BeyondAge
     class Constants
     {
         public static readonly float SCALE = 8;
+
+        public static readonly string ToggleDebugKey = "ToggleDebug";
     }
 }

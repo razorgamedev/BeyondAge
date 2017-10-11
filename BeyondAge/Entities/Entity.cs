@@ -27,6 +27,8 @@ namespace BeyondAge.Entities
         public void Kill() => Remove = true;
         public void Revive() => Remove = false;
 
+        public bool Has(Type t) => components.ContainsKey(t);
+
         public T Get<T>()
         {
             // Whew this is gross and slow

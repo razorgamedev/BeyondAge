@@ -29,7 +29,13 @@ namespace BeyondAge.Entities
         public Filter Register(Filter filter)
         {
             filters.Add(filter);
+            filter.WorldRef = this;
             return filter;
+        }
+
+        public List<Entity> GetAllWithComponent(Type t)
+        {
+            return entities.Where(e => e.Has(t)).ToList();
         }
 
         public void Update(GameTime time)
@@ -75,6 +81,11 @@ namespace BeyondAge.Entities
                     }
                 }
             });
+        }
+        
+        public void UiDraw(SpriteBatch batch)
+        {
+            
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿using NLua;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +18,29 @@ namespace BeyondAge
     {
         private static GameInput self;
         private Dictionary<Keys, KeyState> keyStates;
+        private LuaTable KeyMap;
 
         private GameInput() { 
             keyStates = new Dictionary<Keys, KeyState>();
+            
+            Lua lua = new Lua();
+            var fn = lua.LoadFile("Content/lua/keymap.lua");
+
+            KeyMap = fn.Call()[0] as LuaTable;
+
+            
+        }
+        
+        public bool KeyPressed(string keyName)
+        {
+            var theKey = (KeyMap["Keyboard"] as LuaTable)[keyName];
+            bool succ = Enum.TryParse<Keys>(theKey as string, out Keys key);
+            if (!succ)
+            {
+                Console.WriteLine($"WARNING::GameInput:: Cant find key: {theKey}");
+                return false;
+            }
+            return KeyPressed(key);
         }
 
         public bool KeyDown(Keys key)

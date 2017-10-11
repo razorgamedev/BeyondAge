@@ -15,6 +15,7 @@ namespace BeyondAge
         public static readonly int Width = 1280;
         public static readonly int Height = 720;
         public static AssetCatalog Assets { get; private set; }
+        public static GameManager TheGame { get; private set; }
 
         public BeyondAge()
         {
@@ -36,6 +37,8 @@ namespace BeyondAge
 
             world = new World();
             world.Register(new SpriteRenderer());
+            world.Register(new PhysicsSystem());
+            world.Register(new PlayerController());
 
             base.Initialize();
         }
@@ -43,12 +46,15 @@ namespace BeyondAge
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            batch = new SpriteBatch(GraphicsDevice);
-            Assets = new AssetCatalog(Content);
+            batch       = new SpriteBatch(GraphicsDevice);
+            Assets      = new AssetCatalog(Content);
+            TheGame     = new GameManager();
 
             var test = world.Create("player");
             test.Add<Body>(new Body { X = 128, Y = 128, Width = 8 * Constants.SCALE, Height = 16 * Constants.SCALE });
             test.Add<Sprite>(new Sprite(Assets.GetTexture("character_sheet"), new Rectangle(0, 0, 8, 16)));
+            test.Add<PhysicsBody>(new PhysicsBody{});
+            test.Add<Player>(new Player());
 
             // TODO: use this.Content to load your game content here
         }
@@ -66,6 +72,7 @@ namespace BeyondAge
             // TODO: Add your update logic here
             world.Update(time);
 
+            TheGame.Update();
             GameInput.Self.Update();
             base.Update(time);
         }

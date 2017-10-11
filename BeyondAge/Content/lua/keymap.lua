@@ -1,0 +1,5 @@
+return {
+	["Keyboard"] = {
+		["ToggleDebug"] = "OemTilde"
+	}
+}
