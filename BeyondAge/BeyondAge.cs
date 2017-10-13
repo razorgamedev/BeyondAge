@@ -3,6 +3,7 @@ using BeyondAge.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace BeyondAge
 {
@@ -11,11 +12,15 @@ namespace BeyondAge
         GraphicsDeviceManager graphics;
         SpriteBatch batch;
         World world;
-        
+        Primitives primitives;
+        TileMap map;
+        Camera camera;
+
         public static readonly int Width = 1280;
         public static readonly int Height = 720;
         public static AssetCatalog Assets { get; private set; }
         public static GameManager TheGame { get; private set; }
+        public static Color ClearColor { get;set; } = Color.CornflowerBlue;
 
         public BeyondAge()
         {
@@ -34,11 +39,7 @@ namespace BeyondAge
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
-            world = new World();
-            world.Register(new SpriteRenderer());
-            world.Register(new PhysicsSystem());
-            world.Register(new PlayerController());
+            camera = new Camera();
 
             base.Initialize();
         }
@@ -49,6 +50,15 @@ namespace BeyondAge
             batch       = new SpriteBatch(GraphicsDevice);
             Assets      = new AssetCatalog(Content);
             TheGame     = new GameManager();
+
+            primitives = new Primitives(GraphicsDevice, batch);
+
+            map = new TileMap("test_map");
+
+            world = new World();
+            world.Register(new SpriteRenderer());
+            world.Register(new PlayerController(camera));
+            world.Register(new PhysicsSystem(primitives));
 
             var test = world.Create("player");
             test.Add<Body>(new Body { X = 128, Y = 128, Width = 8 * Constants.SCALE, Height = 16 * Constants.SCALE });
@@ -79,10 +89,22 @@ namespace BeyondAge
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(ClearColor);
 
-            batch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp);
+            batch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, transformMatrix: camera.TranslationMatrix);
+            
+            map.Draw(batch, primitives);
+            
             world.Draw(batch);
+            batch.End();
+
+            // GUI
+            batch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.AnisotropicClamp);
+            var font = Assets.GetFont("Font");
+
+            primitives.DrawRect(new Rectangle(10, 10, 64, 64), Color.DarkSlateGray);
+            batch.DrawString(font, (Math.Floor(1 / gameTime.ElapsedGameTime.TotalSeconds)).ToString(), new Vector2(20, 20), Color.White);
+
             batch.End();
 
             base.Draw(gameTime);

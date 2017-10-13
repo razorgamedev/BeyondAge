@@ -1,5 +1,10 @@
 return {
 	["Keyboard"] = {
-		["ToggleDebug"] = "OemTilde"
+		["ToggleDebug"] = "OemTilde",
+
+        ["PlayerMoveLeft"]  = "A",
+        ["PlayerMoveRight"] = "D",
+        ["PlayerMoveUp"]    = "W",
+        ["PlayerMoveDown"]  = "S",
 	}
 }

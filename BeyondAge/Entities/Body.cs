@@ -19,6 +19,8 @@ namespace BeyondAge.Entities
         public float Top { get => Y; }
         public float Bottom { get => Y + Height; }
 
+        public Vector2 Center { get => new Vector2(X + Width / 2, Y + Height / 2); }
+
         public Vector2 Position {
             get => new Vector2(X, Y);
             set {

@@ -59,6 +59,8 @@
     <Compile Include="Entities\World.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="Graphics\AssetCatalog.cs" />
+    <Compile Include="Graphics\Camera.cs" />
+    <Compile Include="Graphics\Primitives.cs" />
     <Compile Include="Graphics\TileMap.cs" />
     <Compile Include="GameInput.cs" />
     <Compile Include="Program.cs" />
@@ -89,6 +91,7 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
     <None Include="app.config" />
     <None Include="app.manifest" />
+    <None Include="Content\fonts\Font.spritefont" />
     <None Include="Content\lua\keymap.lua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -101,7 +104,9 @@
     <Folder Include="Utilities\" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Content\maps\tilesheet_1.tsx" />
+    <TypeScriptCompile Include="Content\maps\tilesheet_1.tsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </TypeScriptCompile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />

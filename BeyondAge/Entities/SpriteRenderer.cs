@@ -25,7 +25,7 @@ namespace BeyondAge.Entities
 
             batch.Draw(
                sprite.Texture,
-               new Rectangle((int)(body.X + sprite.OffsetX), (int)(body.Y + sprite.OffsetY), (int)body.Width, (int)body.Height),
+               new Rectangle((int)(body.X + sprite.OffsetX), (int)(body.Y + sprite.OffsetY), (int)(body.Width), (int)(body.Height)),
                sprite.Region,
                sprite.Color,
                0,

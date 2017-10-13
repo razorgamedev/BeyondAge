@@ -43,6 +43,35 @@ namespace BeyondAge
             return KeyPressed(key);
         }
 
+        public bool KeyReleased(string keyName)
+        {
+            var theKey = (KeyMap["Keyboard"] as LuaTable)[keyName];
+            bool succ = Enum.TryParse<Keys>(theKey as string, out Keys key);
+            if (!succ)
+            {
+                Console.WriteLine($"WARNING::GameInput:: Cant find key: {theKey}");
+                return false;
+            }
+            return KeyReleased(key);
+        }
+
+        public bool KeyDown(string keyName)
+        {
+            var theKey = (KeyMap["Keyboard"] as LuaTable)[keyName];
+            bool succ = Enum.TryParse<Keys>(theKey as string, out Keys key);
+            if (!succ)
+            {
+                Console.WriteLine($"WARNING::GameInput:: Cant find key: {theKey}");
+                return false;
+            }
+            return KeyDown(key);
+        }
+
+        public bool KeyUp(string keyName)
+        {
+            return !KeyDown(keyName);
+        }
+
         public bool KeyDown(Keys key)
         {
             if (!keyStates.ContainsKey(key))
