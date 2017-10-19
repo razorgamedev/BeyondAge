@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2017.09.13" orientation="orthogonal" renderorder="right-down" width="32" height="32" tilewidth="8" tileheight="8" infinite="0" nextobjectid="4">
+<map version="1.0" tiledversion="2017.09.13" orientation="orthogonal" renderorder="right-down" width="32" height="32" tilewidth="8" tileheight="8" infinite="0" nextobjectid="5">
  <tileset firstgid="1" source="tilesheet_1.tsx"/>
  <layer name="Tile Layer 1" width="32" height="32">
   <data encoding="csv">
@@ -76,6 +76,9 @@
  <objectgroup name="Solids">
   <object id="3" x="32.8472" y="67.1103">
    <polygon points="0,0 45.8729,45.0234 61.7301,-5.38015"/>
+  </object>
+  <object id="4" x="182.642" y="6.79598">
+   <polyline points="0,0 -22.0869,22.3701 7.07914,31.9977 -10.7603,65.4113 20.1048,64.5618 30.0156,86.0824 37.9442,40.7759 25.4849,31.7146 49.554,26.0513 57.1995,16.1405 13.8751,4.24749 11.3266,-2.54849 0.283166,-0.283166"/>
   </object>
  </objectgroup>
 </map>

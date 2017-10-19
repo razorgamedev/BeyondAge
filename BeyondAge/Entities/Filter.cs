@@ -31,6 +31,7 @@ namespace BeyondAge.Entities
         public virtual void PreDraw(SpriteBatch batch) { }
         public virtual void UiDraw(Entity ent, SpriteBatch batch) { }
         public virtual void Update(Entity ent, GameTime time) { }
+        public virtual void ConstantUpdate(Entity ent, GameTime time) { }
         public virtual void Draw(Entity ent, SpriteBatch batch) { }
         public virtual void DebugDraw(Entity ent, SpriteBatch batch) { }
         public virtual void DebugUiDraw(Entity ent, SpriteBatch batch) { }

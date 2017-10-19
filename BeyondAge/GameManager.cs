@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BeyondAge.Graphics;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -16,7 +18,7 @@ namespace BeyondAge
             PAUSED
         };
 
-        Status GameStatus { get;set; } = GameManager.Status.RUNNING;
+        public Status GameStatus { get; set; } = GameManager.Status.RUNNING;
 
         public bool Debugging { get; set; } = false;
 
@@ -32,6 +34,11 @@ namespace BeyondAge
                 var state = GamePad.GetState(PlayerIndex.One);
                 //if (state.IsButtonDown())
             }
+        }
+
+        public void UiDraw(SpriteBatch batch, Primitives primitives)
+        {
+
         }
     }
 }

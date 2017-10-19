@@ -40,7 +40,7 @@ namespace BeyondAge.GameStates
 
             var test = world.Create("npc");
             test.Add<Body>(new Body { X = 128 + 128, Y = 128 + 32, Width = 8 * Constants.SCALE, Height = 6 * Constants.SCALE });
-            
+            test.Add<Character>(new Character { Name = "Bilmith", Age = 188 });
             var sprite = test.Add<Sprite>(new Sprite(BeyondAge.Assets.GetTexture("character_sheet"), new Rectangle(0, 0, 8, 16)));
             sprite.Color = new Color(0f, 0f, 3f, 1f);
 

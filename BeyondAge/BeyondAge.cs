@@ -56,9 +56,10 @@ namespace BeyondAge
 
             primitives = new Primitives(GraphicsDevice, batch);
 
-            world = new World();
+            world = new World(32, 32);
             world.Register(new SpriteRenderer());
             world.Register(new PlayerController(camera));
+            world.Register(new CharacterController(primitives));
             var physics = (PhysicsSystem)world.Register(new PhysicsSystem(primitives));
             
             // Goto the menu level
@@ -99,7 +100,9 @@ namespace BeyondAge
 
             // GUI
             batch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.AnisotropicClamp);
+
             gsm.DrawGui(batch, primitives);
+            TheGame.UiDraw(batch, primitives);
 
             // Draw Fps
             if (TheGame.Debugging)

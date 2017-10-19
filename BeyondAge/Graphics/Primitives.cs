@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BeyondAge.Graphics
 {
-    class Primitives
+    public class Primitives
     {
         private Texture2D pixel;
         private SpriteBatch batch;

@@ -14,12 +14,7 @@ namespace BeyondAge.Entities
         public List<Vector2> Points { get; set; } = new List<Vector2>();
     }
 
-    class Solid : Body
-    {
-        public Solid()
-        {
-        }
-    }
+    class Solid : Body {}
 
     class Line
     {
@@ -94,6 +89,7 @@ namespace BeyondAge.Entities
 
         public bool Body_In_Polygon(Polygon poly, Body body)
         {
+            // Get the lines from the body
             Line left_wall = new Line
             {
                 Start = body.Position,
@@ -118,6 +114,7 @@ namespace BeyondAge.Entities
                 End = new Vector2(body.X + body.Width, body.Y)
             };
 
+            // Calculate the intersections
             var end = poly.Points[0] + poly.Position;
             for (int i = 1; i < poly.Points.Count; i++)
             {

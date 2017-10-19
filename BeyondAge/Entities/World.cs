@@ -13,8 +13,12 @@ namespace BeyondAge.Entities
         private List<Filter> filters;
         private List<Entity> entities;
 
-        public World()
+        private Entity[] entityGrid;
+
+        public World(int width, int height)
         {
+            entityGrid = new Entity[width * height];
+
             filters = new List<Filter>();
             entities = new List<Entity>();
         }
@@ -36,6 +40,14 @@ namespace BeyondAge.Entities
         public List<Entity> GetAllWithComponent(Type t)
         {
             return entities.Where(e => e.Has(t)).ToList();
+        }
+
+        public Entity GetFirstWithComponent(Type t)
+        {
+            foreach(var ent in entities) {
+                if (ent.Has(t)) return ent;
+            }
+            return null;
         }
 
         public Filter GetFilter<T>()
@@ -87,7 +99,9 @@ namespace BeyondAge.Entities
                         {
                             if (ent.Loaded == false)
                                 filter.Load(ent);
-                            filter.Update(ent, time);
+                            if (BeyondAge.TheGame.GameStatus == GameManager.Status.RUNNING)
+                                filter.Update(ent, time);
+                            filter.ConstantUpdate(ent, time);
                         }
                     }
                     ent.Loaded = true;
