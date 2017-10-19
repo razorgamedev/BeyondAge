@@ -68,6 +68,9 @@
     <Compile Include="Graphics\TileMap.cs" />
     <Compile Include="GameInput.cs" />
     <Compile Include="Interfaces\IGameEventHandler.cs" />
+    <Compile Include="Managers\Dialog.cs" />
+    <Compile Include="Managers\DialogViewer.cs" />
+    <Compile Include="Managers\TimerManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\GameState.cs" />
@@ -97,6 +100,9 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
     <None Include="app.config" />
     <None Include="app.manifest" />
+    <None Include="Content\dialog\npc.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Content\fonts\Font.spritefont" />
     <None Include="Content\lua\keymap.lua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

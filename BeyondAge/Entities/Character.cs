@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using BeyondAge.Graphics;
 using Microsoft.Xna.Framework.Input;
+using BeyondAge.Managers;
 
 namespace BeyondAge.Entities
 {
@@ -20,6 +21,7 @@ namespace BeyondAge.Entities
     {
         private Entity player;
         private Primitives primitives;
+        private Dialog dialog;
 
         public CharacterController(Primitives primitives) : base(typeof(Body), typeof(Character), typeof(Sprite), typeof(PhysicsBody))
         {
@@ -52,6 +54,7 @@ namespace BeyondAge.Entities
                     {
                         if (GameInput.Self.KeyDown(Keys.Enter))
                         {
+                            BeyondAge.TheGame.DoDialog(new Dialog());
                             Console.WriteLine($"Hello I am {character.Name}!");
                         }
                     }

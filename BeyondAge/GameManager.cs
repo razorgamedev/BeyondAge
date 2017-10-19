@@ -1,4 +1,5 @@
 ﻿using BeyondAge.Graphics;
+using BeyondAge.Managers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -12,6 +13,13 @@ namespace BeyondAge
 {
     public class GameManager
     {
+        DialogViewer dialogViewer;
+
+        public GameManager()
+        {
+            dialogViewer = new DialogViewer();
+        }
+
         public enum Status
         {
             RUNNING,
@@ -22,6 +30,11 @@ namespace BeyondAge
 
         public bool Debugging { get; set; } = false;
 
+        public void DoDialog(Dialog dialog)
+        {
+            dialogViewer.ShowDialog(dialog);
+        }
+        
         public void Update()
         {
             if (GameInput.Self.KeyPressed(Constants.ToggleDebugKey))
@@ -29,16 +42,18 @@ namespace BeyondAge
                 Debugging = !Debugging;
             }
 
+            if (dialogViewer.Showing) GameStatus = Status.PAUSED;
+
             if (GamePad.GetState(PlayerIndex.One).IsConnected)
             {
                 var state = GamePad.GetState(PlayerIndex.One);
-                //if (state.IsButtonDown())
             }
         }
 
         public void UiDraw(SpriteBatch batch, Primitives primitives)
         {
-
+            //if (dialogViewer.Showing)
+            dialogViewer.UiDraw(batch, primitives);
         }
     }
 }

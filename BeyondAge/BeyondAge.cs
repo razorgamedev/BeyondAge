@@ -1,6 +1,7 @@
 ﻿using BeyondAge.Entities;
 using BeyondAge.GameStates;
 using BeyondAge.Graphics;
+using BeyondAge.Managers;
 using BeyondAge.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -83,6 +84,7 @@ namespace BeyondAge
             TheGame.Update();
             GameInput.Self.Update();
             gsm.Update(time);
+            TimerManager.Self.Update(time);
 
             base.Update(time);
         }
