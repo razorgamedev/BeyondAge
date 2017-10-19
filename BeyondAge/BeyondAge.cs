@@ -1,5 +1,7 @@
 ﻿using BeyondAge.Entities;
+using BeyondAge.GameStates;
 using BeyondAge.Graphics;
+using BeyondAge.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -13,8 +15,8 @@ namespace BeyondAge
         SpriteBatch batch;
         World world;
         Primitives primitives;
-        TileMap map;
         Camera camera;
+        GameStateManager gsm;
 
         public static readonly int Width = 1280;
         public static readonly int Height = 720;
@@ -40,6 +42,7 @@ namespace BeyondAge
         {
             // TODO: Add your initialization logic here
             camera = new Camera();
+            gsm = new GameStateManager();
 
             base.Initialize();
         }
@@ -53,20 +56,14 @@ namespace BeyondAge
 
             primitives = new Primitives(GraphicsDevice, batch);
 
-            map = new TileMap("test_map");
-
             world = new World();
             world.Register(new SpriteRenderer());
             world.Register(new PlayerController(camera));
-            world.Register(new PhysicsSystem(primitives));
-
-            var test = world.Create("player");
-            test.Add<Body>(new Body { X = 128, Y = 128, Width = 8 * Constants.SCALE, Height = 16 * Constants.SCALE });
-            test.Add<Sprite>(new Sprite(Assets.GetTexture("character_sheet"), new Rectangle(0, 0, 8, 16)));
-            test.Add<PhysicsBody>(new PhysicsBody{});
-            test.Add<Player>(new Player());
-
-            // TODO: use this.Content to load your game content here
+            var physics = (PhysicsSystem)world.Register(new PhysicsSystem(primitives));
+            
+            // Goto the menu level
+            gsm.Goto(new GameLevel(world));
+            //gsm.Goto(new Menu(world));
         }
 
         protected override void UnloadContent()
@@ -84,6 +81,8 @@ namespace BeyondAge
 
             TheGame.Update();
             GameInput.Self.Update();
+            gsm.Update(time);
+
             base.Update(time);
         }
 
@@ -91,19 +90,24 @@ namespace BeyondAge
         {
             GraphicsDevice.Clear(ClearColor);
 
-            batch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, transformMatrix: camera.TranslationMatrix);
+            batch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.PointClamp, transformMatrix: camera.TranslationMatrix);
             
-            map.Draw(batch, primitives);
-            
+            gsm.Draw(batch, primitives);
             world.Draw(batch);
+            
             batch.End();
 
             // GUI
             batch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.AnisotropicClamp);
-            var font = Assets.GetFont("Font");
+            gsm.DrawGui(batch, primitives);
 
-            primitives.DrawRect(new Rectangle(10, 10, 64, 64), Color.DarkSlateGray);
-            batch.DrawString(font, (Math.Floor(1 / gameTime.ElapsedGameTime.TotalSeconds)).ToString(), new Vector2(20, 20), Color.White);
+            // Draw Fps
+            if (TheGame.Debugging)
+            {
+                var font = Assets.GetFont("Font");
+                primitives.DrawRect(new Rectangle(10, 10, 64, 64), Color.DarkSlateGray);
+                batch.DrawString(font, (Math.Floor(1 / gameTime.ElapsedGameTime.TotalSeconds)).ToString(), new Vector2(20, 20), Color.White);
+            }
 
             batch.End();
 

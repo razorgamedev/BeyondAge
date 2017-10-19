@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BeyondAge.Entities;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -14,13 +15,62 @@ namespace BeyondAge.Graphics
     {
         private TiledSharp.TmxMap map;
         private List<Rectangle> regions;
+        private World world;
 
-        public TileMap(string map_name)
+        public int Width { get => map.Width; }
+        public int Height { get => map.Height; }
+
+        public int TileWidth { get => map.TileHeight; }
+        public int TileHeight { get => map.TileHeight; }
+
+        public TileMap(string map_name, World world)
         {
+            this.world = world;
+            Load(map_name);
+        }
+
+        public void Load(string map_name)
+        {
+            var physicsSystem = (PhysicsSystem)world.GetFilter<PhysicsSystem>();
+
             map = new TmxMap($"Content/maps/{map_name}.tmx");
 
             regions = new List<Rectangle>();
 
+            if (physicsSystem != null)
+            {
+                foreach(var olayer in map.ObjectGroups)
+                {
+                    foreach(var obj in olayer.Objects)
+                    {
+                        if (obj.Points != null)
+                        {
+                            var points = new List<Vector2>();
+                            
+                            foreach(var p in obj.Points)
+                                points.Add(new Vector2((float)(p.X * Constants.SCALE), (float)(p.Y * Constants.SCALE)));
+                            points.Add(new Vector2((float)(obj.Points[0].X * Constants.SCALE), (float)(obj.Points[0].Y * Constants.SCALE)));
+                            
+                            physicsSystem.AddPolygon(new Polygon
+                            {
+                                Points = points,
+                                Position = new Vector2((float)obj.X * Constants.SCALE, (float)obj.Y * Constants.SCALE)
+                            });
+                        } else
+                        {
+                            physicsSystem.AddSolid(
+                                new Solid
+                                {
+                                    X = (float)obj.X * Constants.SCALE,
+                                    Y = (float)obj.Y * Constants.SCALE,
+                                    Width = (float)obj.Width * Constants.SCALE,
+                                    Height = (float)obj.Height * Constants.SCALE
+                                }
+                                );
+                        }
+                    }
+                }
+            }
             var ts = map.Tilesets[0];
             int ntw = (int)(ts.Image.Width / ts.TileWidth);
             int nth = (int)(ts.Image.Height / ts.TileHeight);

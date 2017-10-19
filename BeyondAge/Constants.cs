@@ -17,9 +17,10 @@ namespace BeyondAge
         public static readonly string PlayerMoveUp      = "PlayerMoveUp";
         public static readonly string PlayerMoveDown    = "PlayerMoveDown";
 
-        public static readonly int GridSize                 = 8;
-        public static readonly float CameraSmoothValue      = 0.02f;
-        public static readonly float CameraPredictionScale  = 2.0f; // Used to point towards the players position + velocity * scale
+        public static readonly int GridSize                 = 32;
+        public static readonly int MapSize                  = 32;
+        public static readonly float CameraSmoothValue      = 0.075f;
+        public static readonly float CameraPredictionScale  = 0.4f; // Used to point towards the players position + velocity * scale
 
     }
 }

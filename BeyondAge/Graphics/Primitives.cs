@@ -13,7 +13,7 @@ namespace BeyondAge.Graphics
         private Texture2D pixel;
         private SpriteBatch batch;
 
-        public int LinePixelWidth { get; set; } = 5;
+        public int LinePixelWidth { get; set; } = 3;
 
         public Primitives(GraphicsDevice device, SpriteBatch batch)
         {
@@ -28,7 +28,7 @@ namespace BeyondAge.Graphics
 
         public void DrawRect(Rectangle rect, Color color)
         {
-            batch.Draw(pixel, rect, color);
+            batch.Draw(pixel, rect, null, color, 0, Vector2.Zero, SpriteEffects.None, 1);
         }
 
         public void DrawLineRect(Rectangle rect, Color color)
@@ -38,10 +38,10 @@ namespace BeyondAge.Graphics
             var top = new Rectangle(rect.X, rect.Y, rect.Width, LinePixelWidth);
             var bottom = new Rectangle(rect.X, rect.Y + rect.Height - LinePixelWidth, rect.Width, LinePixelWidth);
 
-            batch.Draw(pixel, left, color);
-            batch.Draw(pixel, right, color);
-            batch.Draw(pixel, top, color);
-            batch.Draw(pixel, bottom, color);
+            batch.Draw(pixel, left, null, color, 0, Vector2.Zero, SpriteEffects.None, 1);
+            batch.Draw(pixel, right, null, color, 0, Vector2.Zero, SpriteEffects.None, 1);
+            batch.Draw(pixel, top, null, color, 0, Vector2.Zero, SpriteEffects.None, 1);
+            batch.Draw(pixel, bottom, null, color, 0, Vector2.Zero, SpriteEffects.None, 1);
         }
 
         public void DrawLine(Vector2 start, Vector2 end, Color color)
@@ -66,7 +66,7 @@ namespace BeyondAge.Graphics
                 angle, 
                 new Vector2(0, 0), 
                 SpriteEffects.None, 
-                1);
+                1f);
         }
     }
 }

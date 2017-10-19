@@ -38,6 +38,33 @@ namespace BeyondAge.Entities
             return entities.Where(e => e.Has(t)).ToList();
         }
 
+        public Filter GetFilter<T>()
+        {
+            foreach(var filter in filters)
+            {
+                if (filter is T)
+                {
+                    return (filter);
+                }
+            }
+            return null;
+        }
+
+        public void DestroyAll()
+        {
+            entities.ForEach(e =>
+            {
+                foreach (var filter in filters)
+                {
+                    if (filter.Matches(e))
+                    {
+                        filter.Destroy(e);
+                    }
+                }
+            });
+            entities.Clear();
+        }
+
         public void Update(GameTime time)
         {
             filters.ForEach(f => f.PreUpdate(time));

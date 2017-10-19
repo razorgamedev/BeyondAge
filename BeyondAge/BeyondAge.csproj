@@ -58,13 +58,17 @@
     <Compile Include="Entities\SpriteRenderer.cs" />
     <Compile Include="Entities\World.cs" />
     <Compile Include="GameManager.cs" />
+    <Compile Include="GameStates\GameLevel.cs" />
+    <Compile Include="GameStates\Menu.cs" />
     <Compile Include="Graphics\AssetCatalog.cs" />
     <Compile Include="Graphics\Camera.cs" />
     <Compile Include="Graphics\Primitives.cs" />
     <Compile Include="Graphics\TileMap.cs" />
     <Compile Include="GameInput.cs" />
+    <Compile Include="Interfaces\IGameEventHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\GameState.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="KeraLua, Version=1.3.2.0, Culture=neutral, PublicKeyToken=04d04586786c6f34, processorArchitecture=MSIL">
@@ -100,9 +104,7 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Utilities\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <TypeScriptCompile Include="Content\maps\tilesheet_1.tsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
