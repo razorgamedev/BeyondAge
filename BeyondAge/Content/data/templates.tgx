@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templategroup name="templates" nexttemplateid="1">
+ <template name="Rock1" id="0">
+  <object type="bill" width="24" height="24">
+   <properties>
+    <property name="rh" type="int" value="24"/>
+    <property name="rw" type="int" value="24"/>
+    <property name="rx" type="int" value="48"/>
+   </properties>
+  </object>
+ </template>
+</templategroup>

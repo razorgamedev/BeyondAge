@@ -15,10 +15,14 @@ namespace BeyondAge.GameStates
     class Menu: GameState
     {
         World world;
+        Camera camera;
+        Penumbra.PenumbraComponent penumbra;
 
-        public Menu(World world)
+        public Menu(World world, Penumbra.PenumbraComponent penumbra, Camera camera)
         {
             this.world = world;
+            this.penumbra = penumbra;
+            this.camera = camera;
         }
 
         public override void DrawGui(SpriteBatch batch, Primitives primitives)
@@ -39,7 +43,7 @@ namespace BeyondAge.GameStates
         {
             if (GameInput.Self.KeyPressed(Keys.Enter))
                 if (this.gsm != null)
-                    gsm.Goto(new GameLevel(world));
+                    gsm.Goto(new GameLevel(world, penumbra, camera));
         }
     }
 }

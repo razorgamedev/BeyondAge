@@ -3,6 +3,7 @@ using BeyondAge.Managers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using NLua;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,19 +31,23 @@ namespace BeyondAge
 
         public bool Debugging { get; set; } = false;
 
-        public void DoDialog(Dialog dialog)
+        public void DoDialog(LuaTable dialog, int startingIndex = 1)
         {
-            dialogViewer.ShowDialog(dialog);
+            dialogViewer.ShowDialog(dialog, startingIndex);
         }
         
-        public void Update()
+        public void Update(GameTime time)
         {
             if (GameInput.Self.KeyPressed(Constants.ToggleDebugKey))
             {
                 Debugging = !Debugging;
             }
 
-            if (dialogViewer.Showing) GameStatus = Status.PAUSED;
+            if (dialogViewer.Showing)
+            {
+                GameStatus = Status.PAUSED;
+                dialogViewer.Update(time);
+            }
 
             if (GamePad.GetState(PlayerIndex.One).IsConnected)
             {

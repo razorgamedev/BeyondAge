@@ -27,8 +27,6 @@ namespace BeyondAge
             var fn = lua.LoadFile("Content/lua/keymap.lua");
 
             KeyMap = fn.Call()[0] as LuaTable;
-
-            
         }
         
         public bool KeyPressed(string keyName)
@@ -70,6 +68,14 @@ namespace BeyondAge
         public bool KeyUp(string keyName)
         {
             return !KeyDown(keyName);
+        }
+
+        public void PopKey(Keys key)
+        {
+            if (keyStates.ContainsKey(key))
+            {
+                keyStates.Remove(key);
+            }
         }
 
         public bool KeyDown(Keys key)

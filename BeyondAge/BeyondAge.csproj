@@ -25,6 +25,7 @@
     <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -52,6 +53,8 @@
     <Compile Include="Entities\Component.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Filter.cs" />
+    <Compile Include="Entities\Illuminate.cs" />
+    <Compile Include="Entities\IlluminationSystem.cs" />
     <Compile Include="Entities\Npc.cs" />
     <Compile Include="Entities\PhysicsBody.cs" />
     <Compile Include="Entities\PhysicsSystem.cs" />
@@ -68,7 +71,6 @@
     <Compile Include="Graphics\TileMap.cs" />
     <Compile Include="GameInput.cs" />
     <Compile Include="Interfaces\IGameEventHandler.cs" />
-    <Compile Include="Managers\Dialog.cs" />
     <Compile Include="Managers\DialogViewer.cs" />
     <Compile Include="Managers\TimerManager.cs" />
     <Compile Include="Program.cs" />
@@ -82,6 +84,9 @@
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="MonoGame.Penumbra, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MonoGame.Penumbra.WindowsDX.1.4.0\lib\net45\MonoGame.Penumbra.dll</HintPath>
+    </Reference>
     <Reference Include="NLua, Version=1.3.2.0, Culture=neutral, PublicKeyToken=8df2ab518030ea95, processorArchitecture=MSIL">
       <HintPath>..\packages\NLua.1.3.2.1\lib\net45\NLua.dll</HintPath>
     </Reference>
@@ -92,6 +97,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\data\objecttypes.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\images\character_sheet.png" />
     <Content Include="Content\images\tilesheet_1.png" />
     <Content Include="Icon.ico" />
@@ -104,6 +112,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\fonts\Font.spritefont" />
+    <None Include="Content\lua\entities.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Content\lua\keymap.lua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -111,6 +122,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="TODO.md" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

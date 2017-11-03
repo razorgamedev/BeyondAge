@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using BeyondAge.Graphics;
 using Microsoft.Xna.Framework.Input;
 using BeyondAge.Managers;
+using NLua;
 
 namespace BeyondAge.Entities
 {
@@ -21,7 +22,11 @@ namespace BeyondAge.Entities
     {
         private Entity player;
         private Primitives primitives;
-        private Dialog dialog;
+
+        public int TimesTalkedToByPlayer { get; private set; } = 0;
+
+        private float coolDown = 0;
+        private float maxCoolDown { get => 1; }
 
         public CharacterController(Primitives primitives) : base(typeof(Body), typeof(Character), typeof(Sprite), typeof(PhysicsBody))
         {
@@ -37,12 +42,12 @@ namespace BeyondAge.Entities
         {
             if (player != null)
             {
-                var body = ent.Get<Body>();
-                var sprite = ent.Get<Sprite>();
-                var physics = ent.Get<PhysicsBody>();
-                var pbody = player.Get<Body>();
-                var pphysics = player.Get<PhysicsBody>();
-                var character = ent.Get<Character>();
+                var body        = ent.Get<Body>();
+                var sprite      = ent.Get<Sprite>();
+                var physics     = ent.Get<PhysicsBody>();
+                var pbody       = player.Get<Body>();
+                var pphysics    = player.Get<PhysicsBody>();
+                var character   = ent.Get<Character>();
 
                 if (Vector2.Distance(body.Center, pbody.Center) < Constants.InteractionDistance)
                 {
@@ -52,12 +57,20 @@ namespace BeyondAge.Entities
 
                     if (Math.Floor(val) == 3)
                     {
-                        if (GameInput.Self.KeyDown(Keys.Enter))
+                        if (GameInput.Self.KeyPressed(Keys.Enter) && coolDown <= 0)
                         {
-                            BeyondAge.TheGame.DoDialog(new Dialog());
-                            Console.WriteLine($"Hello I am {character.Name}!");
+                            var table = BeyondAge.Assets.GetDialogTable("npc");
+                            var dialogTable = table[character.Name] as LuaTable;
+                            
+                            BeyondAge.TheGame.DoDialog(dialogTable, (TimesTalkedToByPlayer == 0) ? 1 : 2);
+
+                            TimesTalkedToByPlayer++;
+                            coolDown = maxCoolDown;
                         }
                     }
+
+                    if (coolDown > 0)
+                        coolDown -= (float)(time.ElapsedGameTime.TotalSeconds);
                 }
             }
         }

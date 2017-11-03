@@ -10,7 +10,7 @@ namespace BeyondAge.Entities
 {
     class SpriteRenderer : Filter
     {
-        public float MapHeight { get; set; } = 32 * Constants.MapSize;
+        public static float MapHeight { get; set; } = 32 * Constants.MapSize;
 
         public SpriteRenderer() : base(typeof(Body), typeof(Sprite))
         {
@@ -25,9 +25,7 @@ namespace BeyondAge.Entities
             var sprite = ent.Get<Sprite>();
             var body = ent.Get<Body>();
 
-            float layer = 0.3f + (body.Y / MapHeight) * 0.1f;
-            //if (layer < 0) layer = 0.01f;
-            //if (layer > 1) layer = 1;
+            float layer = 0.3f + ((body.Y + body.Size.Y) / MapHeight) * 0.1f;
             
             batch.Draw(
                sprite.Texture,

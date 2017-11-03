@@ -44,11 +44,7 @@ namespace BeyondAge.Entities
 
             var target = new Vector2(body.X + physics.VelX * Constants.CameraPredictionScale, body.Y + physics.VelY * Constants.CameraPredictionScale);
 
-            var dx = -BeyondAge.Width / 2  + body.Width  / 2 + target.X - camera.Position.X;
-            var dy = -BeyondAge.Height / 2 + body.Height / 2 + target.Y - camera.Position.Y;
-
-            camera.MoveCamera(new Vector2(dx * Constants.CameraSmoothValue, dy * Constants.CameraSmoothValue));
-
+            camera.CenterOn(body.Center);
         }
     }
 }

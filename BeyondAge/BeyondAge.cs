@@ -6,6 +6,8 @@ using BeyondAge.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using NLua;
+using Penumbra;
 using System;
 
 namespace BeyondAge
@@ -18,6 +20,8 @@ namespace BeyondAge
         Primitives primitives;
         Camera camera;
         GameStateManager gsm;
+        Lua lua;
+        PenumbraComponent penumbra;
 
         public static readonly int Width = 1280;
         public static readonly int Height = 720;
@@ -37,6 +41,10 @@ namespace BeyondAge
             
             IsMouseVisible = true;
             Content.RootDirectory = "Content";
+
+            // Add the penumbra lighting component
+            penumbra = new PenumbraComponent(this);
+            Components.Add(penumbra);
         }
 
         protected override void Initialize()
@@ -44,6 +52,10 @@ namespace BeyondAge
             // TODO: Add your initialization logic here
             camera = new Camera();
             gsm = new GameStateManager();
+            lua = new Lua();
+
+            // Initialize the lighting system
+            penumbra.Initialize();
 
             base.Initialize();
         }
@@ -52,7 +64,7 @@ namespace BeyondAge
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             batch       = new SpriteBatch(GraphicsDevice);
-            Assets      = new AssetCatalog(Content);
+            Assets      = new AssetCatalog(Content, lua);
             TheGame     = new GameManager();
 
             primitives = new Primitives(GraphicsDevice, batch);
@@ -61,10 +73,11 @@ namespace BeyondAge
             world.Register(new SpriteRenderer());
             world.Register(new PlayerController(camera));
             world.Register(new CharacterController(primitives));
+            world.Register(new IlluminationSystem(penumbra));
             var physics = (PhysicsSystem)world.Register(new PhysicsSystem(primitives));
             
             // Goto the menu level
-            gsm.Goto(new GameLevel(world));
+            gsm.Goto(new GameLevel(world, penumbra, camera));
             //gsm.Goto(new Menu(world));
         }
 
@@ -75,13 +88,22 @@ namespace BeyondAge
 
         protected override void Update(GameTime time)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            if (TheGame.GameStatus == GameManager.Status.RUNNING)
+                if (GameInput.Self.KeyPressed(Keys.Escape))
+                    Exit();
+
+            camera.ViewportWidth = GraphicsDevice.PresentationParameters.BackBufferWidth;
+            camera.ViewportHeight = GraphicsDevice.PresentationParameters.BackBufferHeight;
+
+            if (GameInput.Self.KeyPressed(Keys.OemPlus))
+                camera.AdjustZoom(0.1f);
+            if (GameInput.Self.KeyPressed(Keys.OemMinus))
+                camera.AdjustZoom(-0.1f);
 
             // TODO: Add your update logic here
             world.Update(time);
 
-            TheGame.Update();
+            TheGame.Update(time);
             GameInput.Self.Update();
             gsm.Update(time);
             TimerManager.Self.Update(time);
@@ -89,8 +111,11 @@ namespace BeyondAge
             base.Update(time);
         }
 
-        protected override void Draw(GameTime gameTime)
+        protected override void Draw(GameTime time)
         {
+            penumbra.BeginDraw();
+            penumbra.Transform = camera.TranslationMatrix;
+
             GraphicsDevice.Clear(ClearColor);
 
             batch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.PointClamp, transformMatrix: camera.TranslationMatrix);
@@ -99,6 +124,14 @@ namespace BeyondAge
             world.Draw(batch);
             
             batch.End();
+
+            try
+            {
+                penumbra.Draw(time);
+            } catch (Exception e) { }
+
+            //batch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.PointClamp, transformMatrix: camera.TranslationMatrix);
+            //batch.End();
 
             // GUI
             batch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.AnisotropicClamp);
@@ -111,12 +144,12 @@ namespace BeyondAge
             {
                 var font = Assets.GetFont("Font");
                 primitives.DrawRect(new Rectangle(10, 10, 64, 64), Color.DarkSlateGray);
-                batch.DrawString(font, (Math.Floor(1 / gameTime.ElapsedGameTime.TotalSeconds)).ToString(), new Vector2(20, 20), Color.White);
+                batch.DrawString(font, (Math.Floor(1 / time.ElapsedGameTime.TotalSeconds)).ToString(), new Vector2(20, 20), Color.White);
             }
 
             batch.End();
 
-            base.Draw(gameTime);
+            //base.Draw(time);
         }
     }
 }

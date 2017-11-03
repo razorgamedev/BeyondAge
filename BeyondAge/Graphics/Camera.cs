@@ -27,6 +27,23 @@ namespace BeyondAge.Graphics
         public int ViewportWidth { get; set; }
         public int ViewportHeight { get; set; }
 
+        public Rectangle Bounds { get; set; } = Rectangle.Empty;
+
+        public float Width { 
+            get {
+                if (Zoom == 0) return ViewportWidth;
+                return ViewportWidth / Zoom; 
+            } 
+        }
+
+        public float Height
+        {
+            get {
+                if (Zoom == 0) return ViewportHeight;
+                return ViewportHeight / Zoom;
+            }
+        }
+
         // Center of the Viewport which does not account for scale
         public Vector2 ViewportCenter
         {
@@ -70,7 +87,8 @@ namespace BeyondAge.Graphics
         public void MoveCamera(Vector2 cameraMovement)
         {
             Vector2 newPosition = Position + cameraMovement;
-            Position = newPosition;
+
+            Position = ClampToBounds(newPosition);
         }
 
         public Rectangle ViewportWorldBoundry()
@@ -85,10 +103,29 @@ namespace BeyondAge.Graphics
                (int)(viewPortBottomCorner.Y - viewPortCorner.Y));
         }
 
+        private Vector2 ClampToBounds(Vector2 newPosition)
+        {
+            if (Bounds != Rectangle.Empty)
+            {
+                if (newPosition.X - Width / 2 < Bounds.X) newPosition.X = Bounds.X + Width / 2;
+                if (newPosition.Y - Height / 2 < Bounds.Y) newPosition.Y = Bounds.Y + Height / 2;
+                
+                if (newPosition.X + Width / 2 > Bounds.X + Bounds.Width)
+                    newPosition.X = Bounds.X + Bounds.Width - Width / 2;
+
+                if (newPosition.Y + Height / 2 > Bounds.Y + Bounds.Height)
+                    newPosition.Y = Bounds.Y + Bounds.Height - Height / 2;
+
+                //Console.WriteLine(ViewportWidth);
+            }
+
+            return newPosition;
+        }
+
         // Center the camera on specific pixel coordinates
         public void CenterOn(Vector2 position)
         {
-            Position = position;
+            Position = ClampToBounds(position);
         }
         
         public Vector2 WorldToScreen(Vector2 worldPosition)
