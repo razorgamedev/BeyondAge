@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using NLua;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,13 +15,28 @@ namespace BeyondAge.Entities
         private List<Entity> entities;
 
         private Entity[] entityGrid;
+        private EntityAssembler assembler;
 
         public World(int width, int height)
         {
             entityGrid = new Entity[width * height];
+            assembler = new EntityAssembler(this);
 
             filters = new List<Filter>();
             entities = new List<Entity>();
+        }
+
+        public Entity Assemble(string name, float x = 0, float y = 0, float vx = 0, float vy = 0)
+        {
+            var entity = assembler.Assemble(name);
+
+            var body = entity.Get<Body>();
+            if (body != null) { body.X = x; body.Y = y; }
+
+            var phy = entity.Get<PhysicsBody>();
+            if (phy != null) { phy.VelX = vx; phy.VelY = vy; }
+
+            return entity;
         }
 
         public Entity Create(params string[] tags)

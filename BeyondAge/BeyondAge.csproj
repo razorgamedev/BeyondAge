@@ -52,6 +52,7 @@
     <Compile Include="Entities\Character.cs" />
     <Compile Include="Entities\Component.cs" />
     <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\EntityAssembler.cs" />
     <Compile Include="Entities\Filter.cs" />
     <Compile Include="Entities\Illuminate.cs" />
     <Compile Include="Entities\IlluminationSystem.cs" />

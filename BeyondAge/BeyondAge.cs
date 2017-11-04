@@ -54,6 +54,9 @@ namespace BeyondAge
             gsm = new GameStateManager();
             lua = new Lua();
 
+            var c = new Constants();
+            lua["Constants"] = c;
+
             // Initialize the lighting system
             penumbra.Initialize();
 

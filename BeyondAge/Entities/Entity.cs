@@ -23,6 +23,10 @@ namespace BeyondAge.Entities
         public List<Type> ComponentTypes { get => components.Keys.ToList(); }
         
         public bool HasTag(string tag) => tags.Contains(tag);
+        public void AddTag(params string[] tag)
+        {
+            foreach(var id in tag) tags.Add(id);
+        }
 
         public void Kill() => Remove = true;
         public void Revive() => Remove = false;
