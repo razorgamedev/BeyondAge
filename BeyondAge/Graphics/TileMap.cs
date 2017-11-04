@@ -28,6 +28,13 @@ namespace BeyondAge.Graphics
         private Camera camera;
         private Penumbra.PenumbraComponent penumbra;
         
+        private Dictionary<string, Type> bgGraphicEffects = new Dictionary<string, Type>
+        {
+            {"BgClouds", typeof(BgClouds)}
+        };
+        
+        private List<BgGraphics> bgEffects = new List<BgGraphics>();
+
         private Dictionary<string, XmlElement> objectTypes;
         private DateTime loadTime;
         private string path;
@@ -79,6 +86,7 @@ namespace BeyondAge.Graphics
             penumbra.Lights.Clear();
             penumbra.Hulls.Clear();
             physicsSystem.ClearSolids();
+            bgEffects.Clear();
 
             // Set the cameras bounds
             camera.Bounds = new Rectangle(
@@ -86,6 +94,20 @@ namespace BeyondAge.Graphics
                 (int)((map.Width * map.TileWidth) * Constants.SCALE),
                 (int)((map.Height * map.TileHeight) * Constants.SCALE)
                 );
+
+            if (map.Properties.ContainsKey("BgEffects"))
+            {
+                var effects = map.Properties["BgEffects"].Split(' ');
+                foreach(var effect in effects)
+                    if (bgGraphicEffects.ContainsKey(effect))
+                        bgEffects.Add((BgGraphics)Activator.CreateInstance(bgGraphicEffects[effect]));
+                    else
+                    {
+                        Console.WriteLine($"[WARNING]:: Cannot find BgGraphics effect {effect}");
+                    }
+
+                bgEffects.ForEach(e => e.Load());
+            }
 
             if (physicsSystem != null)
             {
@@ -259,6 +281,8 @@ namespace BeyondAge.Graphics
                     loadTime = now;
                 }
             }
+
+            bgEffects.ForEach(e => e.Update(time));
         }
 
         public void Draw(SpriteBatch batch, Primitives primitives)
@@ -267,6 +291,8 @@ namespace BeyondAge.Graphics
 
             var image_name = map.Tilesets[0].Name;
             var texture = BeyondAge.Assets.GetTexture(image_name);
+
+            bgEffects.ForEach(e => e.Draw(batch));
 
             foreach (var layer in map.Layers)
             {

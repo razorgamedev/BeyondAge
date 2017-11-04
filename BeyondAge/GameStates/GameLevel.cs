@@ -30,7 +30,7 @@ namespace BeyondAge.GameStates
 
         public override void Load()
         {
-            map = new TileMap("test_map", world, penumbra, camera);
+            map = new TileMap("Dungeon_Room_2", world, penumbra, camera);
 
             var spriteSystem = (SpriteRenderer)world.GetFilter<SpriteRenderer>();
             if (spriteSystem != null)
@@ -38,18 +38,13 @@ namespace BeyondAge.GameStates
                 SpriteRenderer.MapHeight = map.Height * map.TileHeight * Constants.SCALE;
             }
 
+            camera.Zoom = 0.6f;
             
             var entities = BeyondAge.Assets.GetLuaData("entities");
 
-            var p = world.Assemble("Player", 512, 512);
-
-            var test = world.Create("npc");
-            test.Add<Body>(new Body { X = 228 + 512, Y = 128 + 512, Width = 8 * Constants.SCALE, Height = 6 * Constants.SCALE });
-            test.Add<Character>(new Character { Name = "Bilmith", Age = 188 });
-            var sprite = test.Add<Sprite>(new Sprite(BeyondAge.Assets.GetTexture("character_sheet"), new Rectangle(0, 0, 8, 16)));
-            sprite.Color = new Color(0f, 0f, 3f, 1f);
-
-            test.Add<PhysicsBody>(new PhysicsBody { });
+            var p = world.Assemble("Player", 1280, 1280);
+            var n = world.Assemble("Npc1", 228 + 512, 128 + 512);
+            n.Add<Character>(new Character { Name = "Bilmith", Age = 188 });
         }
         
         public override void Update(GameTime time)

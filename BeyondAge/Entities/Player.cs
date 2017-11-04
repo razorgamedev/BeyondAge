@@ -26,6 +26,8 @@ namespace BeyondAge.Entities
             var physics = ent.Get<PhysicsBody>();
             var body = ent.Get<Body>();
 
+            physics.Speed = 1280;
+
             var dt = (float)time.ElapsedGameTime.TotalSeconds;
 
             if (GameInput.Self.KeyDown(Constants.PlayerMoveLeft))

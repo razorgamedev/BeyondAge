@@ -31,9 +31,9 @@ namespace BeyondAge.Entities
                sprite.Texture,
                new Rectangle(
                    (int)(body.X + sprite.OffsetX), 
-                   (int)(body.Y + sprite.OffsetY - sprite.Region.Height * Constants.SCALE + body.Height), 
-                   (int)(sprite.Region.Width * Constants.SCALE), 
-                   (int)(sprite.Region.Height * Constants.SCALE)),
+                   (int)(body.Y + sprite.OffsetY - (sprite.Region.Height * Constants.SCALE * sprite.ScaleY) + body.Height), 
+                   (int)(sprite.Region.Width * Constants.SCALE * sprite.ScaleX), 
+                   (int)(sprite.Region.Height * Constants.SCALE * sprite.ScaleY)),
                sprite.Region,
                sprite.Color,
                0,

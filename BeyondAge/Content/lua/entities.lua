@@ -13,12 +13,14 @@ player.Add<Illuminate>(new Illuminate(new PointLight
 }));
 ]]
 
+local scaleFactor = 2
+
 return {
     ["Player"] = {
         tags = {"player"},
 		components = {
-			["Body"] = {X = 512 + 200, Y = 512, Width = 8 * Constants.SCALE, Height = 6 * Constants.SCALE},
-			["Sprite"] = {Texture = "character_sheet", Region = {0, 0, 8, 16}},
+			["Body"] = {X = 512 + 200, Y = 512, Width = 8 * Constants.SCALE * scaleFactor, Height = 6 * Constants.SCALE * scaleFactor},
+			["Sprite"] = {Texture = "character_sheet", Region = {0, 0, 8, 16}, Scale = {scaleFactor, scaleFactor}},
 			["PhysicsBody"] = {},
 			["Player"] = {},
 			["Illuminate"] = {
@@ -28,5 +30,14 @@ return {
 				Scale = 1500
 			}
 		}
-    }
+    },
+
+	["Npc1"] = {
+		tags = {"npc", "friendly"},
+		components = {
+			["Body"] = {X = 512 + 200, Y = 512, Width = 8 * Constants.SCALE, Height = 6 * Constants.SCALE},
+			["Sprite"] = {Texture = "character_sheet", Region = {0, 0, 8, 16}, Color = {0, 0, 1, 1}},
+			["PhysicsBody"] = {},
+		}
+	}
 }

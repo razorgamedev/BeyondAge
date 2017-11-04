@@ -23,5 +23,8 @@ namespace BeyondAge
         public static readonly float CameraPredictionScale  = 0.4f; // Used to point towards the players position + velocity * scale
         public static readonly float InteractionDistance    = 128 + 32;
 
+        public static readonly int NumSkyTilesWide = 10;
+        public static readonly int NumSkyTilesHigh = 20;
+
     }
 }

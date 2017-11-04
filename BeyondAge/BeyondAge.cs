@@ -57,8 +57,10 @@ namespace BeyondAge
             var c = new Constants();
             lua["Constants"] = c;
 
+
             // Initialize the lighting system
             penumbra.Initialize();
+            penumbra.AmbientColor = new Color(0.9f, 0.9f, 0.9f, 1.0f);
 
             base.Initialize();
         }

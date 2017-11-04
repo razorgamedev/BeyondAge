@@ -67,6 +67,8 @@
     <Compile Include="GameStates\GameLevel.cs" />
     <Compile Include="GameStates\Menu.cs" />
     <Compile Include="Graphics\AssetCatalog.cs" />
+    <Compile Include="Graphics\BgClouds.cs" />
+    <Compile Include="Graphics\BgGraphics.cs" />
     <Compile Include="Graphics\Camera.cs" />
     <Compile Include="Graphics\Primitives.cs" />
     <Compile Include="Graphics\TileMap.cs" />
@@ -102,6 +104,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\images\character_sheet.png" />
+    <Content Include="Content\images\dungeon_tiles.png" />
     <Content Include="Content\images\tilesheet_1.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
@@ -117,6 +120,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\lua\keymap.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\maps\Dungeon_Room_2.tmx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\maps\test_map.tmx">

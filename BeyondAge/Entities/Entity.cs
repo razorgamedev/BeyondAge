@@ -36,6 +36,7 @@ namespace BeyondAge.Entities
         public T Get<T>()
         {
             // Whew this is gross and slow
+            if (Has(typeof(T)) == false) return default(T);
             return (T)(object)(components[typeof(T)]);
         }
 
