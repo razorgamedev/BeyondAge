@@ -84,12 +84,14 @@ namespace BeyondAge.Entities
                     switch (key)
                     {
                         case "Body":
-                            if (!ValidateKeys(key, component, "X", "Y", "Width", "Height")) return entity;
-                            var x = (float)(component["X"] as Double?);
-                            var y = (float)(component["Y"] as Double?);
-                            var width = (float)(component["Width"] as Double?);
-                            var height = (float)(component["Height"] as Double?);
-                            entity.Add<Body>(new Body { X = x, Y = y, Width = width, Height = height });
+                            {
+                                if (!ValidateKeys(key, component, "X", "Y", "Width", "Height")) return entity;
+                                var x = (float)(component["X"] as Double?);
+                                var y = (float)(component["Y"] as Double?);
+                                var width = (float)(component["Width"] as Double?);
+                                var height = (float)(component["Height"] as Double?);
+                                entity.Add<Body>(new Body { X = x, Y = y, Width = width, Height = height });
+                            }
                             break;
                         case "Sprite":
                             {
@@ -170,6 +172,14 @@ namespace BeyondAge.Entities
                                     Radius = radius,
                                     Scale = new Vector2(scale)
                                 }));
+                            }
+                            break;
+                        case "Character":
+                            {
+                                if (!ValidateKeys(key, component, "Name")) return entity;
+
+                                var charName = component["Name"] as string;
+                                entity.Add<Character>(new Character { Name = charName });
                             }
                             break;
                         default:

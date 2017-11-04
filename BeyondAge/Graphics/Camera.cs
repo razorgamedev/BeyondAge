@@ -102,10 +102,10 @@ namespace BeyondAge.Graphics
                (int)(viewPortBottomCorner.X - viewPortCorner.X),
                (int)(viewPortBottomCorner.Y - viewPortCorner.Y));
         }
-
+            
         private Vector2 ClampToBounds(Vector2 newPosition)
         {
-            if (Bounds != Rectangle.Empty)
+            if (Bounds != Rectangle.Empty && Bounds.Width != 0 && Bounds.Height != 0)
             {
                 if (newPosition.X - Width / 2 < Bounds.X) newPosition.X = Bounds.X + Width / 2;
                 if (newPosition.Y - Height / 2 < Bounds.Y) newPosition.Y = Bounds.Y + Height / 2;

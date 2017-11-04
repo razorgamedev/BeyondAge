@@ -4,11 +4,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NLua;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BeyondAge
 {
@@ -38,10 +33,12 @@ namespace BeyondAge
         
         public void Update(GameTime time)
         {
-            if (GameInput.Self.KeyPressed(Constants.ToggleDebugKey))
+#if DEVELOPMENT_BUILD
+            if (GameInput.Self.KeyPressed(Constants.ToggleDebugKey) && !GameInput.Self.KeyDown(Keys.LeftShift))
             {
                 Debugging = !Debugging;
             }
+#endif
 
             if (dialogViewer.Showing)
             {

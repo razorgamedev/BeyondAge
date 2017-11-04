@@ -12,6 +12,7 @@ using System;
 
 namespace BeyondAge
 {
+
     public class BeyondAge : Game
     {
         GraphicsDeviceManager graphics;
@@ -22,6 +23,10 @@ namespace BeyondAge
         GameStateManager gsm;
         Lua lua;
         PenumbraComponent penumbra;
+
+#if DEVELOPMENT_BUILD
+        DevelopmentConsole console;
+#endif
 
         public static readonly int Width = 1280;
         public static readonly int Height = 720;
@@ -45,6 +50,7 @@ namespace BeyondAge
             // Add the penumbra lighting component
             penumbra = new PenumbraComponent(this);
             Components.Add(penumbra);
+
         }
 
         protected override void Initialize()
@@ -74,6 +80,12 @@ namespace BeyondAge
 
             primitives = new Primitives(GraphicsDevice, batch);
 
+
+#if DEVELOPMENT_BUILD
+            console = new DevelopmentConsole(this, batch, primitives, lua);
+            Components.Add(console);
+#endif
+
             world = new World(32, 32);
             world.Register(new SpriteRenderer());
             world.Register(new PlayerController(camera));
@@ -100,10 +112,13 @@ namespace BeyondAge
             camera.ViewportWidth = GraphicsDevice.PresentationParameters.BackBufferWidth;
             camera.ViewportHeight = GraphicsDevice.PresentationParameters.BackBufferHeight;
 
-            if (GameInput.Self.KeyPressed(Keys.OemPlus))
-                camera.AdjustZoom(0.1f);
-            if (GameInput.Self.KeyPressed(Keys.OemMinus))
-                camera.AdjustZoom(-0.1f);
+            if (TheGame.Debugging)
+            {
+                if (GameInput.Self.KeyDown(Keys.OemPlus))
+                    camera.AdjustZoom(0.02f);
+                if (GameInput.Self.KeyDown(Keys.OemMinus))
+                    camera.AdjustZoom(-0.02f);
+            }
 
             // TODO: Add your update logic here
             world.Update(time);
@@ -112,6 +127,10 @@ namespace BeyondAge
             GameInput.Self.Update();
             gsm.Update(time);
             TimerManager.Self.Update(time);
+
+#if DEVELOPMENT_BUILD
+            console.Update(time);
+#endif
 
             base.Update(time);
         }
@@ -153,6 +172,10 @@ namespace BeyondAge
             }
 
             batch.End();
+
+#if DEVELOPMENT_BUILD
+            console.Draw(time);
+#endif
 
             //base.Draw(time);
         }

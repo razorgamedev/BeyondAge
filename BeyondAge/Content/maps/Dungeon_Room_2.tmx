@@ -2,6 +2,7 @@
 <map version="1.0" tiledversion="2017.09.13" orientation="orthogonal" renderorder="right-down" width="68" height="96" tilewidth="8" tileheight="8" infinite="0" backgroundcolor="#55ffff" nextobjectid="84">
  <properties>
   <property name="BgEffects" value="BgClouds"/>
+  <property name="ClampCamera" type="bool" value="false"/>
  </properties>
  <tileset firstgid="1" name="dungeon_tiles" tilewidth="8" tileheight="8" tilecount="4096" columns="64">
   <image source="../images/dungeon_tiles.png" width="512" height="512"/>

@@ -44,7 +44,6 @@ namespace BeyondAge.GameStates
 
             var p = world.Assemble("Player", 1280, 1280);
             var n = world.Assemble("Npc1", 228 + 512, 128 + 512);
-            n.Add<Character>(new Character { Name = "Bilmith", Age = 188 });
         }
         
         public override void Update(GameTime time)

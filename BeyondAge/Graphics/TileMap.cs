@@ -89,11 +89,19 @@ namespace BeyondAge.Graphics
             bgEffects.Clear();
 
             // Set the cameras bounds
-            camera.Bounds = new Rectangle(
-                0, 0,
-                (int)((map.Width * map.TileWidth) * Constants.SCALE),
-                (int)((map.Height * map.TileHeight) * Constants.SCALE)
-                );
+
+            camera.Bounds = Rectangle.Empty;
+            if (map.Properties.ContainsKey("ClampCamera"))
+            {
+                if ((map.Properties["ClampCamera"] as string) == "true")
+                {
+                    camera.Bounds = new Rectangle(
+                        0, 0,
+                        (int)((map.Width * map.TileWidth) * Constants.SCALE),
+                        (int)((map.Height * map.TileHeight) * Constants.SCALE)
+                        );
+                }
+            }
 
             if (map.Properties.ContainsKey("BgEffects"))
             {

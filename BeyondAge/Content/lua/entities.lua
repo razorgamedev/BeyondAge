@@ -38,6 +38,7 @@ return {
 			["Body"] = {X = 512 + 200, Y = 512, Width = 8 * Constants.SCALE, Height = 6 * Constants.SCALE},
 			["Sprite"] = {Texture = "character_sheet", Region = {0, 0, 8, 16}, Color = {0, 0, 1, 1}},
 			["PhysicsBody"] = {},
+			["Character"] = {Name = "Bilmith"}
 		}
 	}
 }
