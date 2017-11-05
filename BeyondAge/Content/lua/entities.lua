@@ -28,7 +28,8 @@ return {
 				Intensity = 1,
 				Radius = 1500,
 				Scale = 1500
-			}
+			},
+			["Health"] = {}
 		}
     },
 

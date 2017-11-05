@@ -20,6 +20,8 @@ namespace BeyondAge
         private Dictionary<Keys, KeyState> keyStates;
         private LuaTable KeyMap;
 
+        //private List<Func<>>
+
         private GameInput() { 
             keyStates = new Dictionary<Keys, KeyState>();
             

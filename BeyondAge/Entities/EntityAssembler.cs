@@ -182,6 +182,11 @@ namespace BeyondAge.Entities
                                 entity.Add<Character>(new Character { Name = charName });
                             }
                             break;
+                        case "Health":
+                            {
+                                entity.Add<Status>(new Status());
+                            }
+                            break;
                         default:
                             Console.WriteLine($"[WARNING]:: Unknown component type: {key}");
                             break;

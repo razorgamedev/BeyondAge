@@ -54,6 +54,7 @@
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\EntityAssembler.cs" />
     <Compile Include="Entities\Filter.cs" />
+    <Compile Include="Entities\Health.cs" />
     <Compile Include="Entities\Illuminate.cs" />
     <Compile Include="Entities\IlluminationSystem.cs" />
     <Compile Include="Entities\Npc.cs" />

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2017.09.13" orientation="orthogonal" renderorder="right-down" width="68" height="96" tilewidth="8" tileheight="8" infinite="0" backgroundcolor="#55ffff" nextobjectid="84">
+<map version="1.0" tiledversion="2017.09.13" orientation="orthogonal" renderorder="right-down" width="68" height="96" tilewidth="8" tileheight="8" infinite="0" backgroundcolor="#55ffff" nextobjectid="89">
  <properties>
   <property name="BgEffects" value="BgClouds"/>
   <property name="ClampCamera" type="bool" value="false"/>
@@ -79,14 +79,7 @@
    eJztm89O20AQxr27phzKnxNVX6c0gQOlN1BfhxDggIjUSiBeB5qWA00kkEA8TmdiO1kbkzjetdeLv580smRlR9nPM7PjtR0EALhnU0RmyqkKgjNl7sc1NvQY0vi/pMUd2R8L2rqgrA5FxvmoSZV6MKxJn+LlREW51Bay+nTjuQs6N+T8UVEuJTHTp+OJh/FTlLx4CWUQrMj0Odbng4pqjY/5lFAmrzqkRVfO/42vmthaj7NwvPQaXFeqmvc8BMWQXBBHrnCiR1xT2kSnwHx9rSVV0eS8ScjmT5X59IW02IYeU9pYR4qAOvIa1qQHXabckBa30GMKaslrECNpjhzWkJ+07v+S5Y/vjQea06Msf7TJHuoGAEagN3PHtYX6dUk+rjJ+eM9Y0blvMuqvLsgG4u37WP4N24jGjFU8Rta/D/BiQY8n8vGs+flI/39NzubIxntC/ByC99x7c+anjxnJ+vcBPofmPrbIxyfNz56cxQWb/txh0Z47I8TseLRAP9v8sKDHAfk41PwMtWts0ndP9Ki5T722oMcl+biK/bAW62QbObGxLKZ6luHFgh5P5OM5nMXFPtl3C9d2EmMe7KvmcU///Z9I10PTayvmrEdNJ29NEQbPaZPxVdTTOp4zJWvKBa2pA6XNp2TOcO8xkNXU0zr0OJfRM/1UPxX3YMvGSNJ7jKX/+0KhljMjsnGJvEnlnKf1VIc1CXmt5X1QstUl191JbMV552s9zdKhOXXJdsh2y+RLnHd196dNQ+/1Vwz7OVOK1t2q63PyrlXXcR1tih5F3rUCoKm4eI+qyUAPAAAAx+L9f0+xDL+F/99T2ETJ/G9P2spXifshAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgLbyH//TbWY=
   </data>
  </layer>
- <objectgroup name="Entities">
-  <object id="2" type="Bird" x="259" y="220" width="5.66667" height="6"/>
-  <object id="61" type="Player" x="275.833" y="320.833" width="24" height="24"/>
-  <object id="62" type="Bird" x="249.167" y="234.667" width="5.66667" height="6"/>
-  <object id="63" type="Bird" x="269.5" y="249.333" width="5.66667" height="6"/>
-  <object id="64" type="Bird" x="286.5" y="239.667" width="5.66667" height="6"/>
-  <object id="65" type="Bird" x="283.167" y="224.667" width="5.66667" height="6"/>
- </objectgroup>
+ <objectgroup name="Entities"/>
  <objectgroup name="Solids">
   <object id="6" x="208" y="8" width="128" height="8"/>
   <object id="9" x="336" y="16" width="48" height="16"/>

@@ -50,9 +50,8 @@ namespace BeyondAge
             // Add the penumbra lighting component
             penumbra = new PenumbraComponent(this);
             Components.Add(penumbra);
-
         }
-
+        
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
@@ -82,7 +81,7 @@ namespace BeyondAge
 
 
 #if DEVELOPMENT_BUILD
-            console = new DevelopmentConsole(this, batch, primitives, lua);
+            console = new DevelopmentConsole(this, batch, primitives, lua, this.Window);
             Components.Add(console);
 #endif
 
@@ -127,11 +126,7 @@ namespace BeyondAge
             GameInput.Self.Update();
             gsm.Update(time);
             TimerManager.Self.Update(time);
-
-#if DEVELOPMENT_BUILD
-            console.Update(time);
-#endif
-
+            
             base.Update(time);
         }
 

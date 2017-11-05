@@ -45,5 +45,10 @@ namespace BeyondAge.Entities
             components.Add(typeof(T), component);
             return (T)(object)(component);
         }
+
+        internal void Add<T>()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

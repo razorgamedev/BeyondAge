@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using BeyondAge.Graphics;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BeyondAge.Entities
 {
@@ -47,6 +48,13 @@ namespace BeyondAge.Entities
             var target = new Vector2(body.X + physics.VelX * Constants.CameraPredictionScale, body.Y + physics.VelY * Constants.CameraPredictionScale);
 
             camera.CenterOn(body.Center);
+        }
+
+        public override void UiDraw(Entity ent, SpriteBatch batch)
+        {
+            var health = ent.Get<Status>().Health;
+
+            // Draw the UI
         }
     }
 }
