@@ -142,7 +142,16 @@ namespace BeyondAge.Entities
         
         public void UiDraw(SpriteBatch batch)
         {
-            
+            entities.ForEach(e =>
+            {
+                foreach (var filter in filters)
+                {
+                    if (filter.Matches(e))
+                    {
+                        filter.UiDraw(e, batch);
+                    }
+                }
+            });
         }
     }
 }

@@ -53,8 +53,14 @@ namespace BeyondAge.Entities
         public override void UiDraw(Entity ent, SpriteBatch batch)
         {
             var health = ent.Get<Status>().Health;
-
+            var icons = BeyondAge.Assets.GetTexture("icons");
+            
             // Draw the UI
+            for (int i = 0; i < health; i++)
+            {
+                int s = 12 * (int)Constants.SCALE / 2;
+                batch.Draw(icons, new Rectangle((i * (s + 8) + 16), 16, s, s), new Rectangle(0, 0, 12, 12), Color.White);
+            }
         }
     }
 }

@@ -153,8 +153,8 @@ namespace BeyondAge
             //batch.End();
 
             // GUI
-            batch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.AnisotropicClamp);
-
+            batch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp);
+            world.UiDraw(batch);
             gsm.DrawGui(batch, primitives);
             TheGame.UiDraw(batch, primitives);
 
