@@ -20,7 +20,7 @@ return {
         tags = {"player"},
 		components = {
 			["Body"] = {X = 512 + 200, Y = 512, Width = 8 * Constants.SCALE * scaleFactor, Height = 6 * Constants.SCALE * scaleFactor},
-			["Sprite"] = {Texture = "character_sheet", Region = {0, 0, 16, 32}, Scale = {1, 1}},
+			--["Sprite"] = {Texture = "character_sheet", Region = {0, 0, 16, 32}, Scale = {1, 1}},
 			["PhysicsBody"] = {},
 			["Player"] = {},
 			["Illuminate"] = {

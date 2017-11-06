@@ -12,12 +12,13 @@ namespace BeyondAge.Entities
 {
     class Player: Component
     {
+        public int Sector { get; set; } = 1;
     }
 
     class PlayerController : Filter
     {
         Camera camera;
-        public PlayerController(Camera camera) : base(typeof(Player), typeof(Body), typeof(PhysicsBody))
+        public PlayerController(Camera camera) : base(typeof(Player), typeof(Body), typeof(PhysicsBody), typeof(Animation))
         {
             this.camera = camera;
         }
@@ -26,28 +27,54 @@ namespace BeyondAge.Entities
         {
             var physics = ent.Get<PhysicsBody>();
             var body = ent.Get<Body>();
+            var player = ent.Get<Player>();
 
             physics.Speed = 1280;
 
             var dt = (float)time.ElapsedGameTime.TotalSeconds;
-
+            
             if (GameInput.Self.KeyDown(Constants.PlayerMoveLeft))
+            {
                 physics.VelX -= physics.Speed * dt;
+                player.Sector = 4;
+            }
 
             if (GameInput.Self.KeyDown(Constants.PlayerMoveRight))
+            {
                 physics.VelX += physics.Speed * dt;
+                player.Sector = 2;
+            }
 
             if (GameInput.Self.KeyDown(Constants.PlayerMoveUp))
+            {
                 physics.VelY -= physics.Speed * dt;
+                player.Sector = 3;
+            }
 
             if (GameInput.Self.KeyDown(Constants.PlayerMoveDown))
+            {
                 physics.VelY += physics.Speed * dt;
+                player.Sector = 1;
+            }
             
-            //camera.Position = body.Position - new Vector2(BeyondAge.Width / 2 - body.Width / 2, BeyondAge.Height / 2 - body.Height / 2);
-
             var target = new Vector2(body.X + physics.VelX * Constants.CameraPredictionScale, body.Y + physics.VelY * Constants.CameraPredictionScale);
 
             camera.CenterOn(body.Center);
+
+
+            var facing = physics.Direction;
+            
+            var which = new string[] { "front", "left", "back", "right" }[player.Sector - 1];
+            var sprite = ent.Get<Animation>();
+
+            // NOTE(Dustin): This is a poor solution, try to find a way to 
+            // get the maximum speed of the player.
+            if (physics.Velocity == Vector2.Zero)
+                sprite.TimerScale = 0;
+            else
+                sprite.TimerScale = physics.Velocity.Length() * 0.005f;
+            
+            sprite.CurrentAnimationID = which;
         }
 
         public override void UiDraw(Entity ent, SpriteBatch batch)

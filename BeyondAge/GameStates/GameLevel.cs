@@ -43,6 +43,36 @@ namespace BeyondAge.GameStates
             var entities = BeyondAge.Assets.GetLuaData("entities");
 
             var p = world.Assemble("Player", 1280, 1280);
+            p.Add<Animation>(new Animation(
+                BeyondAge.Assets.GetTexture("character_sheet"),
+                new Dictionary<string, List<Frame>>
+                {
+                    {"front",   new List<Frame>{ 
+                        new Frame { X = 0,  Y = 0,  Width = 16, Height = 32 },
+                        new Frame { X = 0,  Y = 32, Width = 16, Height = 32 },
+                        new Frame { X = 0,  Y = 64, Width = 16, Height = 32 },
+                        new Frame { X = 0,  Y = 96, Width = 16, Height = 32 },
+                    }},
+                    {"left",    new List<Frame>{ 
+                        new Frame { X = 16,  Y = 0,  Width = 16, Height = 32 },
+                        new Frame { X = 16,  Y = 32, Width = 16, Height = 32 },
+                        new Frame { X = 16,  Y = 64, Width = 16, Height = 32 },
+                        new Frame { X = 16,  Y = 96, Width = 16, Height = 32 },
+                    }},
+                    {"back",    new List<Frame>{ 
+                        new Frame { X = 32,  Y = 0,  Width = 16, Height = 32 },
+                        new Frame { X = 32,  Y = 32, Width = 16, Height = 32 },
+                        new Frame { X = 32,  Y = 64, Width = 16, Height = 32 },
+                        new Frame { X = 32,  Y = 96, Width = 16, Height = 32 },
+                    }},
+                    {"right",   new List<Frame>{ 
+                        new Frame { X = 48,  Y = 0,  Width = 16, Height = 32 },
+                        new Frame { X = 48,  Y = 32, Width = 16, Height = 32 },
+                        new Frame { X = 48,  Y = 64, Width = 16, Height = 32 },
+                        new Frame { X = 48,  Y = 96, Width = 16, Height = 32 },
+                    }}
+                }));
+
             var n = world.Assemble("Npc1", 228 + 512, 128 + 512);
         }
         

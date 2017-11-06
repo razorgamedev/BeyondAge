@@ -90,6 +90,7 @@ namespace BeyondAge
             world.Register(new PlayerController(camera));
             world.Register(new CharacterController(primitives));
             world.Register(new IlluminationSystem(penumbra));
+            world.Register(new AnimationSystem());
             var physics = (PhysicsSystem)world.Register(new PhysicsSystem(primitives));
             
             // Goto the menu level
