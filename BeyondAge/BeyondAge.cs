@@ -87,7 +87,7 @@ namespace BeyondAge
 
             world = new World(32, 32);
             world.Register(new SpriteRenderer());
-            world.Register(new PlayerController(camera));
+            world.Register(new PlayerController(camera, primitives));
             world.Register(new CharacterController(primitives));
             world.Register(new IlluminationSystem(penumbra));
             world.Register(new AnimationSystem());

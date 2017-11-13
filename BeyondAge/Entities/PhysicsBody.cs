@@ -16,6 +16,7 @@ namespace BeyondAge.Entities
         public float Bounce         { get; set; } = 0.2f;
         public float Deceleration   { get; set; } = 0.92f;
         public float Direction      { get; set; } = 0f;
+        public int   Sector         { get; set; } = 1;
 
         public Vector2 Velocity
         {

@@ -88,7 +88,8 @@ namespace BeyondAge.Entities
             var body = ent.Get<Body>();
 
             float layer = 0.3f + ((body.Y + body.Size.Y) / (32 * Constants.MapSize)) * 0.1f;
-            
+            sprite.DrawLayer = layer;
+
             batch.Draw(
                sprite.Texture,
                new Rectangle(
@@ -103,7 +104,7 @@ namespace BeyondAge.Entities
                SpriteEffects.None,
                layer
             );
-
+            
             if (BeyondAge.TheGame.Debugging)
             {
                 var font = BeyondAge.Assets.GetFont("Font");

@@ -12,14 +12,17 @@ namespace BeyondAge.Entities
 {
     class Player: Component
     {
-        public int Sector { get; set; } = 1;
+        public float swingTimer { get; set; } = 0;
     }
 
     class PlayerController : Filter
     {
         Camera camera;
-        public PlayerController(Camera camera) : base(typeof(Player), typeof(Body), typeof(PhysicsBody), typeof(Animation))
+        Primitives primitives;
+        
+        public PlayerController(Camera camera, Primitives primitives) : base(typeof(Player), typeof(Body), typeof(PhysicsBody), typeof(Animation))
         {
+            this.primitives = primitives;
             this.camera = camera;
         }
 
@@ -36,35 +39,34 @@ namespace BeyondAge.Entities
             if (GameInput.Self.KeyDown(Constants.PlayerMoveLeft))
             {
                 physics.VelX -= physics.Speed * dt;
-                player.Sector = 4;
+                physics.Sector = 4;
             }
 
             if (GameInput.Self.KeyDown(Constants.PlayerMoveRight))
             {
                 physics.VelX += physics.Speed * dt;
-                player.Sector = 2;
+                physics.Sector = 2;
             }
 
             if (GameInput.Self.KeyDown(Constants.PlayerMoveUp))
             {
                 physics.VelY -= physics.Speed * dt;
-                player.Sector = 3;
+                physics.Sector = 3;
             }
 
             if (GameInput.Self.KeyDown(Constants.PlayerMoveDown))
             {
                 physics.VelY += physics.Speed * dt;
-                player.Sector = 1;
+                physics.Sector = 1;
             }
             
             var target = new Vector2(body.X + physics.VelX * Constants.CameraPredictionScale, body.Y + physics.VelY * Constants.CameraPredictionScale);
 
             camera.CenterOn(body.Center);
-
-
+            
             var facing = physics.Direction;
             
-            var which = new string[] { "front", "left", "back", "right" }[player.Sector - 1];
+            var which = new string[] { "front", "left", "back", "right" }[physics.Sector - 1];
             var sprite = ent.Get<Animation>();
 
             // NOTE(Dustin): This is a poor solution, try to find a way to 
@@ -75,6 +77,34 @@ namespace BeyondAge.Entities
                 sprite.TimerScale = physics.Velocity.Length() * 0.005f;
             
             sprite.CurrentAnimationID = which;
+
+
+            // Sword swing
+            //player.swingTimer += (float)(time.ElapsedGameTime.TotalSeconds) * 2;
+            //if (player.swingTimer > )
+            var dir = physics.Sector;
+            if (physics.Sector == 1) dir = 3;
+            if (physics.Sector == 3) dir = 1;
+
+            player.swingTimer = (float)((-Math.PI / 4) + Math.Cos(time.TotalGameTime.TotalSeconds) + (Math.PI / 4)) + (float)(Math.PI / 2) * (((dir - 1) % 4) - 1);
+        }
+
+        public override void Draw(Entity ent, SpriteBatch batch)
+        {
+            var physics = ent.Get<PhysicsBody>();
+            var body = ent.Get<Body>();
+            var player = ent.Get<Player>();
+            var sprite = ent.Get<Animation>();
+
+            var swordLen = 256;
+            primitives.DrawLine(
+                new Vector2(
+                    body.Center.X, 
+                    body.Y + sprite.CurrentFrame.Rect.Height / 2), 
+                new Vector2(
+                    body.Center.X + (float)Math.Cos(player.swingTimer) * swordLen, 
+                    body.Y + (sprite.CurrentFrame.Rect.Height / 2)  + (float)Math.Sin(player.swingTimer) * swordLen), 
+                Color.Aquamarine);
         }
 
         public override void UiDraw(Entity ent, SpriteBatch batch)

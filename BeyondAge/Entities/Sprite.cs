@@ -22,6 +22,7 @@ namespace BeyondAge.Entities
 
         public float Scale { set { ScaleX = value; ScaleY = value; } }
         public float Layer { get; set; } = 0f;
+        public float DrawLayer { get; set; } = 0f;
 
         public Vector2 Offset { 
             get => new Vector2(OffsetX, OffsetY); 

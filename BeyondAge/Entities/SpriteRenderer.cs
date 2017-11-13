@@ -26,7 +26,8 @@ namespace BeyondAge.Entities
             var body = ent.Get<Body>();
 
             float layer = 0.3f + ((body.Y + body.Size.Y) / MapHeight) * 0.1f;
-            
+            sprite.DrawLayer = layer;
+
             batch.Draw(
                sprite.Texture,
                new Rectangle(

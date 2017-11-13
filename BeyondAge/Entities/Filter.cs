@@ -10,20 +10,27 @@ namespace BeyondAge.Entities
 {
     abstract class Filter
     {
-        private List<Type> filter;
+        protected List<Type> filter;
+        protected List<Type> optional;
 
         public  World WorldRef;
         public Filter(params Type[] filter) {
             this.filter = filter.ToList();
+            this.optional = new List<Type>();
         }
 
         public bool Matches(Entity ent)
         {
             var keys = ent.ComponentTypes;
+            var matches = true;
             foreach (var f in filter) {
-                if (!keys.Contains(f)) return false;
+                if (!keys.Contains(f))
+                {
+                    matches = false;
+                    break;
+                }
             }
-            return true;
+            return matches;
         }
 
         public virtual void Load(Entity ent) { }

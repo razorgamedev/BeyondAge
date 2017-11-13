@@ -212,6 +212,18 @@ namespace BeyondAge.Entities
                     Color.LightPink
                     );
 
+                var font = BeyondAge.Assets.GetFont("Font");
+                batch.DrawString(
+                    font,
+                    $"X: {rect.X} Y: {rect.Y}",
+                    rect.Position + new Vector2(0, rect.Height + 4),
+                    Color.White,
+                    0,
+                    Vector2.Zero,
+                    0.5f,
+                    SpriteEffects.None,
+                    1);
+
                 foreach (var poly in polygons)
                 {
                     var last = poly.Points[0];

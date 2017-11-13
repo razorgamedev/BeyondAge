@@ -72,6 +72,14 @@ namespace BeyondAge.GameStates
                         new Frame { X = 48,  Y = 96, Width = 16, Height = 32 },
                     }}
                 }));
+            p.Add<Character>(new Character
+            {
+                CharacterType = Character.Type.Player,
+                Clothing = {
+                    Clothing.LoadHair("plain_brown"),
+                    Clothing.LoadShirt("plain_tee")
+                }
+            });
 
             var n = world.Assemble("Npc1", 228 + 512, 128 + 512);
         }
