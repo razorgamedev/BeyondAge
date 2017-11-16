@@ -14,4 +14,8 @@
   <property name="rx" type="int" default="0"/>
   <property name="ry" type="int" default="0"/>
  </objecttype>
+ <objecttype name="door" color="#a0a0a4">
+  <property name="location" type="string" default=""/>
+  <property name="type" type="string" default="sensor"/>
+ </objecttype>
 </objecttypes>

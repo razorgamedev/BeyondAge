@@ -13,6 +13,9 @@ namespace BeyondAge.Entities
     class Player: Component
     {
         public float swingTimer { get; set; } = 0;
+        public bool Swinging { get; set; } = false;
+        public Vector2 SwingTarget { get; set; } = Vector2.Zero;
+        public Vector2 SwingStart { get; set; } = Vector2.Zero;
     }
 
     class PlayerController : Filter
@@ -86,7 +89,12 @@ namespace BeyondAge.Entities
             if (physics.Sector == 1) dir = 3;
             if (physics.Sector == 3) dir = 1;
 
-            player.swingTimer = (float)((-Math.PI / 4) + Math.Cos(time.TotalGameTime.TotalSeconds) + (Math.PI / 4)) + (float)(Math.PI / 2) * (((dir - 1) % 4) - 1);
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+            {
+                var swingSpeed = 8;
+                var timer = time.TotalGameTime.TotalSeconds * swingSpeed;
+                player.swingTimer = (float)((-Math.PI / 4) + Math.Cos(timer) + (Math.PI / 4)) + (float)(Math.PI / 2) * (((dir - 1) % 4) - 1);
+            }
         }
 
         public override void Draw(Entity ent, SpriteBatch batch)
@@ -96,15 +104,34 @@ namespace BeyondAge.Entities
             var player = ent.Get<Player>();
             var sprite = ent.Get<Animation>();
 
-            var swordLen = 256;
-            primitives.DrawLine(
-                new Vector2(
-                    body.Center.X, 
-                    body.Y + sprite.CurrentFrame.Rect.Height / 2), 
-                new Vector2(
-                    body.Center.X + (float)Math.Cos(player.swingTimer) * swordLen, 
-                    body.Y + (sprite.CurrentFrame.Rect.Height / 2)  + (float)Math.Sin(player.swingTimer) * swordLen), 
-                Color.Aquamarine);
+            var swordLen = 48;
+
+            var items = BeyondAge.Assets.GetTexture("items");
+            
+            var end = new Vector2(
+                    body.Center.X + (float)Math.Cos(player.swingTimer) * swordLen,
+                    body.Y + (sprite.CurrentFrame.Rect.Height / 2) + (float)Math.Sin(player.swingTimer) * swordLen);
+            var start = new Vector2(
+                    body.Center.X,
+                    body.Y + sprite.CurrentFrame.Rect.Height / 2);
+
+            var angle = (float)Math.Atan2(end.Y - start.Y, end.X - start.X);
+
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+            {
+                batch.Draw(
+                items,
+                start,
+                new Rectangle(0, 0, swordLen, 6),
+                Color.White,
+                angle,
+                new Vector2(0, 6 / 2f),
+                Constants.SCALE / 2,
+                SpriteEffects.None,
+                1
+                );
+            }
+            //primitives.DrawLine(start, end, Color.Aquamarine);
         }
 
         public override void UiDraw(Entity ent, SpriteBatch batch)
@@ -118,6 +145,8 @@ namespace BeyondAge.Entities
                 int s = 12 * (int)Constants.SCALE / 2;
                 batch.Draw(icons, new Rectangle((i * (s + 8) + 16), 16, s, s), new Rectangle(0, 0, 12, 12), Color.White);
             }
+
+
         }
     }
 }

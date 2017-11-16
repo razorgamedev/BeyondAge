@@ -14,7 +14,11 @@ namespace BeyondAge.Entities
         public List<Vector2> Points { get; set; } = new List<Vector2>();
     }
 
-    class Solid : Body {}
+    class Solid : Body {
+        public bool Is_Sensor { get; set; } = false;
+        public string SensorString { get; set; } = "";
+        public Action<Solid> Callback { get; set; }
+    }
 
     class Line
     {
@@ -174,10 +178,32 @@ namespace BeyondAge.Entities
 
             }
 
-            foreach (var solid in solids)
+            for (int i = solids.Count - 1; i >= 0; i--)
             {
-                if (solid.Contains(body_x)) body_x = body;
-                if (solid.Contains(body_y)) body_y = body;
+                var solid = solids[i];
+                
+                bool collides = false;
+                if (solid.Contains(body_x)) { 
+                    if (!solid.Is_Sensor)
+                        body_x = body;
+                    
+                    collides = true;
+                }
+                    
+                if (solid.Contains(body_y)) {
+                    if (!solid.Is_Sensor)
+                        body_y = body;
+
+                    collides = true;
+                }
+
+                if (ent.Has(typeof(Player)) && collides)
+                {
+                    solid.Callback?.Invoke(solid);
+                    if (solids.Count == 0)
+                        break;
+                }
+                
             }
 
             foreach (var poly in polygons)

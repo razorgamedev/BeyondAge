@@ -141,6 +141,7 @@ namespace BeyondAge.Entities
                            sprite.DrawLayer + 0.011f
                         );
                     }
+
                     if (clothing.ClothingType == Clothing.Type.Shirt)
                     {
                         var region = new Rectangle(clothing.StartPos + new Point((int)(Clothing.HairSize.X * (sector - 1)), 0), Clothing.HairSize.ToPoint());

@@ -1,4 +1,5 @@
 ﻿using BeyondAge.Entities;
+using BeyondAge.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Penumbra;
@@ -45,7 +46,7 @@ namespace BeyondAge.Graphics
 
         public int TileWidth { get => map.TileHeight; }
         public int TileHeight { get => map.TileHeight; }
-
+        
         public TileMap(string map_name, World world, Penumbra.PenumbraComponent penumbra, Camera camera)
         {
             this.world = world;
@@ -171,7 +172,8 @@ namespace BeyondAge.Graphics
                             };
                             penumbra.Lights.Add(light);
 
-                        } else if (obj.Type == "hull")
+                        }
+                        else if (obj.Type == "hull")
                         {
                             if (obj.Points != null)
                             {
@@ -187,13 +189,15 @@ namespace BeyondAge.Graphics
                                 penumbra.Hulls.Add(hull);
                             }
 
-                        } else if (obj.Type == "bill") { 
+                        }
+                        else if (obj.Type == "bill")
+                        {
 
                             var rx = 0;
                             var ry = 0;
                             var rw = 0;
                             var rh = 0;
-                            
+
                             if (odata != null)
                             {
                                 if (odata.HasAttribute("rx"))
@@ -217,12 +221,59 @@ namespace BeyondAge.Graphics
 
                             billboards.Add(new Billboard
                             {
-                                Position    = new Vector2((float)(obj.X * Constants.SCALE), (float)(obj.Y * Constants.SCALE)),
-                                Size        = new Vector2((float)obj.Width * Constants.SCALE, (float)obj.Height * Constants.SCALE),
-                                Region      = new Rectangle(rx,ry,rw,rh)
+                                Position = new Vector2((float)(obj.X * Constants.SCALE), (float)(obj.Y * Constants.SCALE)),
+                                Size = new Vector2((float)obj.Width * Constants.SCALE, (float)obj.Height * Constants.SCALE),
+                                Region = new Rectangle(rx, ry, rw, rh)
                             });
+                        }
+                        else if (obj.Type == "door")
+                        {
 
-                        } else {
+                            //NOTE(Dustin): This seems buggy
+                            var theType = "";
+                            var location = "";
+                            if (odata != null)
+                            {
+                                
+                                if (odata.HasAttribute("type"))
+                                {
+                                    theType = odata.GetAttribute("type");
+                                }
+
+                                if (odata.HasAttribute("location"))
+                                    theType = odata.GetAttribute("location");
+                            }
+
+
+                            if (obj.Properties.ContainsKey("type"))
+                                theType = obj.Properties["type"];
+
+                            if (obj.Properties.ContainsKey("location"))
+                                location = obj.Properties["location"];
+
+                            physicsSystem.AddSolid(
+                                    new Solid
+                                    {
+                                        X = (float)obj.X * Constants.SCALE,
+                                        Y = (float)obj.Y * Constants.SCALE,
+                                        Width = (float)obj.Width * Constants.SCALE,
+                                        Height = (float)obj.Height * Constants.SCALE,
+                                        
+                                        SensorString = location,
+                                        Is_Sensor = true,
+                                        
+                                        Callback = (solid) =>
+                                        {
+                                            if (solid.SensorString != "")
+                                                Load(solid.SensorString);
+                                            Console.WriteLine($"{solid.SensorString}");
+                                        }
+                                    }
+                                    );
+
+                        }
+                        else
+                        {
                             // Add the solid to the physics engine
                             if (obj.Points != null)
                             {

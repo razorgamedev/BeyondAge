@@ -110,6 +110,7 @@
     </Content>
     <Content Include="Content\images\character_sheet.png" />
     <Content Include="Content\images\dungeon_tiles.png" />
+    <Content Include="Content\images\items.png" />
     <Content Include="Content\images\tilesheet_1.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>

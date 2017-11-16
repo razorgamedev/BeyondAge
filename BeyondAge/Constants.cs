@@ -25,6 +25,5 @@ namespace BeyondAge
 
         public static readonly int NumSkyTilesWide = 10;
         public static readonly int NumSkyTilesHigh = 20;
-
     }
 }
