@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2017.09.13" orientation="orthogonal" renderorder="right-down" width="68" height="64" tilewidth="8" tileheight="8" infinite="0" backgroundcolor="#00ffff" nextobjectid="1">
+<map version="1.0" tiledversion="2017.09.13" orientation="orthogonal" renderorder="right-down" width="68" height="64" tilewidth="8" tileheight="8" infinite="0" backgroundcolor="#313131" nextobjectid="5">
  <properties>
   <property name="BgEffects" value="BgClouds"/>
-  <property name="ClampCamera" type="bool" value="false"/>
+  <property name="ClampCamera" type="bool" value="true"/>
  </properties>
  <tileset firstgid="1" source="dungeon_tiles.tsx"/>
  <tileset firstgid="4097" source="tilesheet_1.tsx"/>
  <layer name="Tile Layer 1" width="68" height="64">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3aUWrDMBQAQSdNc680ae9/pArCg+wJbPAMCP/6Y3myhbZtf5e1rh/Ps3us9fPxPDt9lD7qa63bpo/xXOu16WNMF99r3Xd+lyOYLn7X+tv5XY7A/lL2l9JH6aP0Ufqo6WK+U89uupjv1LMzP8r8KH2UPsr5Rzn/KPOjzI/SR+mj5tzU/8vbnJv6f3kzP8r8KH2UPkofpY/SR+mjnH+U849y/6Pc/yj7S9lfSh+lj9JH6aPc/yj3P8r8KPOj9FH6KOcf5fyjzI8yP0ofpY9y/6Pc/yjzo8yP0kcdqY9/lPvBKwBEAAA=
+   H4sIAAAAAAAAC+3aSQoDMQwFUWe8V2e6/5EiaERT2Vi9CUGpB8Zo7Y9shMf4vkOs4469uyXWbcfenfkg80GnWOexnf+s7u4e6zG285/V3eW5X2JdC3V3ee7PWK9C3Z33C3m/kPkg80Hmg8wHVd+lWXdXfZdm3Z39g+wfZD7IfJDzD3L+QfYPsn+Q+SDzQTkXzXtkVneXc9G8R2Z1d/YPsn+Q+SDzQeaDzAeZDzIf5PyDnH9Qnrv/P1Z57v7/WHm/kPcLmQ8yH2Q+yHxQ9V36L/PT6rvU+an9w/5hPj6ZD3L+Qc4/yP5B9g8yH2Q+yP8f5P8Psn+Q/YPMB/1yPt6yoWpSAEQAAA==
   </data>
  </layer>
+ <objectgroup name="Entities">
+  <object id="1" type="door" x="230" y="-10" width="103" height="9.33333">
+   <properties>
+    <property name="location" value="Dungeon_Room_2"/>
+    <property name="tx" type="float" value="-1"/>
+    <property name="ty" type="float" value="507"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="Solids">
+  <object id="3" x="200" y="-8" width="32" height="520"/>
+  <object id="4" x="328" y="-8" width="32" height="520"/>
+ </objectgroup>
 </map>

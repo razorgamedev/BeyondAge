@@ -38,7 +38,7 @@ namespace BeyondAge.GameStates
                 SpriteRenderer.MapHeight = map.Height * map.TileHeight * Constants.SCALE;
             }
 
-            camera.Zoom = 0.6f;
+            camera.Zoom = 0.4f;
             
             var entities = BeyondAge.Assets.GetLuaData("entities");
 
@@ -47,29 +47,29 @@ namespace BeyondAge.GameStates
                 BeyondAge.Assets.GetTexture("character_sheet"),
                 new Dictionary<string, List<Frame>>
                 {
-                    {"front",   new List<Frame>{ 
+                    {"front",   new List<Frame>{
                         new Frame { X = 0,  Y = 0,  Width = 16, Height = 32 },
                         new Frame { X = 0,  Y = 32, Width = 16, Height = 32 },
+                        new Frame { X = 0,  Y = 0,  Width = 16, Height = 32 },
                         new Frame { X = 0,  Y = 64, Width = 16, Height = 32 },
-                        new Frame { X = 0,  Y = 96, Width = 16, Height = 32 },
                     }},
-                    {"left",    new List<Frame>{ 
+                    {"left",    new List<Frame>{
                         new Frame { X = 16,  Y = 0,  Width = 16, Height = 32 },
                         new Frame { X = 16,  Y = 32, Width = 16, Height = 32 },
+                        new Frame { X = 16,  Y = 0,  Width = 16, Height = 32 },
                         new Frame { X = 16,  Y = 64, Width = 16, Height = 32 },
-                        new Frame { X = 16,  Y = 96, Width = 16, Height = 32 },
                     }},
-                    {"back",    new List<Frame>{ 
+                    {"back",    new List<Frame>{
                         new Frame { X = 32,  Y = 0,  Width = 16, Height = 32 },
                         new Frame { X = 32,  Y = 32, Width = 16, Height = 32 },
+                        new Frame { X = 32,  Y = 0,  Width = 16, Height = 32 },
                         new Frame { X = 32,  Y = 64, Width = 16, Height = 32 },
-                        new Frame { X = 32,  Y = 96, Width = 16, Height = 32 },
                     }},
-                    {"right",   new List<Frame>{ 
+                    {"right",   new List<Frame>{
                         new Frame { X = 48,  Y = 0,  Width = 16, Height = 32 },
                         new Frame { X = 48,  Y = 32, Width = 16, Height = 32 },
+                        new Frame { X = 48,  Y = 0,  Width = 16, Height = 32 },
                         new Frame { X = 48,  Y = 64, Width = 16, Height = 32 },
-                        new Frame { X = 48,  Y = 96, Width = 16, Height = 32 },
                     }}
                 }));
             p.Add<Character>(new Character

@@ -76,7 +76,7 @@ namespace BeyondAge.Entities
                 sprite.FrameIndex++;
             }
 
-            if (sprite.FrameIndex >= sprite.NumberOfFrames - 1)
+            if (sprite.FrameIndex >= sprite.NumberOfFrames)
             {
                 sprite.FrameIndex = 0;
             }

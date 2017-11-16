@@ -35,7 +35,7 @@ namespace BeyondAge.Entities
             var body = ent.Get<Body>();
             var player = ent.Get<Player>();
 
-            physics.Speed = 1280;
+            physics.Speed = 1280 * 2;
 
             if (BeyondAge.TheGame.Debugging)
                 physics.Speed *= 8;
@@ -80,7 +80,7 @@ namespace BeyondAge.Entities
             if (physics.Velocity == Vector2.Zero)
                 sprite.TimerScale = 0;
             else
-                sprite.TimerScale = physics.Velocity.Length() * 0.005f;
+                sprite.TimerScale = physics.Velocity.Length() * 0.0025f;
             
             sprite.CurrentAnimationID = which;
 

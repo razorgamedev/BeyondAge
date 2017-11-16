@@ -89,6 +89,8 @@ namespace BeyondAge.Graphics
             physicsSystem.ClearSolids();
             bgEffects.Clear();
 
+            Constants.MapSize = map.Height;
+
             // NOTE(Dustin): Change this so that we support persistant and non persistant entities.
             //world.DestroyAll();
 
@@ -235,6 +237,10 @@ namespace BeyondAge.Graphics
                             //NOTE(Dustin): This seems buggy
                             var theType = "";
                             var location = "";
+
+                            var tx = -1f;
+                            var ty = -1f;
+
                             if (odata != null)
                             {
                                 
@@ -254,6 +260,12 @@ namespace BeyondAge.Graphics
                             if (obj.Properties.ContainsKey("location"))
                                 location = obj.Properties["location"];
 
+                            if (obj.Properties.ContainsKey("tx"))
+                                tx = float.Parse(obj.Properties["tx"]);
+
+                            if (obj.Properties.ContainsKey("ty"))
+                                ty = float.Parse(obj.Properties["ty"]);
+
                             physicsSystem.AddSolid(
                                     new Solid
                                     {
@@ -261,6 +273,8 @@ namespace BeyondAge.Graphics
                                         Y = (float)obj.Y * Constants.SCALE,
                                         Width = (float)obj.Width * Constants.SCALE,
                                         Height = (float)obj.Height * Constants.SCALE,
+
+                                        SensorLocation = new Vector2(tx, ty),
                                         
                                         SensorString = location,
                                         Is_Sensor = true,
@@ -269,7 +283,21 @@ namespace BeyondAge.Graphics
                                         {
                                             if (solid.SensorString != "")
                                                 Load(solid.SensorString);
-                                            Console.WriteLine($"{solid.SensorString}");
+
+                                            var entity = world.GetFirstWithComponent(typeof(Player));
+                                            if (entity != null)
+                                            {
+                                                var body = entity.Get<Body>();
+                                                var physics = entity.Get<PhysicsBody>();
+
+                                                physics.Velocity = Vector2.Zero;
+
+                                                if (solid.SensorLocation.X != -1)
+                                                    body.X = solid.SensorLocation.X * Constants.SCALE;
+
+                                                if (solid.SensorLocation.Y != -1)
+                                                    body.Y = solid.SensorLocation.Y * Constants.SCALE;
+                                            }
                                         }
                                     }
                                     );
@@ -361,7 +389,7 @@ namespace BeyondAge.Graphics
                 var drawLayer = 0f;
                 if (layer.Properties.ContainsKey("layer"))
                     drawLayer = float.Parse(layer.Properties["layer"]);
-                
+
                 for (int y = 0; y < map.Height; y++)
                     for (int x = 0; x < map.Width; x++)
                     {

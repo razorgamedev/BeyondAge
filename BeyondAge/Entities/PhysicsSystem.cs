@@ -14,9 +14,11 @@ namespace BeyondAge.Entities
         public List<Vector2> Points { get; set; } = new List<Vector2>();
     }
 
+    // TODO(Dustin): We need to have the sensor be a child of Solid
     class Solid : Body {
         public bool Is_Sensor { get; set; } = false;
         public string SensorString { get; set; } = "";
+        public Vector2 SensorLocation { get; set; } = Vector2.Zero;
         public Action<Solid> Callback { get; set; }
     }
 
@@ -178,14 +180,16 @@ namespace BeyondAge.Entities
 
             }
 
-            for (int i = solids.Count - 1; i >= 0; i--)
+            bool collides = false;
+            bool sensorHandlesPosition = false;
+            for (int i = 0; i < solids.Count; i++)
             {
                 var solid = solids[i];
                 
-                bool collides = false;
-                if (solid.Contains(body_x)) { 
+                if (solid.Contains(body_x)) {
                     if (!solid.Is_Sensor)
                         body_x = body;
+                    else sensorHandlesPosition = true;
                     
                     collides = true;
                 }
@@ -193,11 +197,12 @@ namespace BeyondAge.Entities
                 if (solid.Contains(body_y)) {
                     if (!solid.Is_Sensor)
                         body_y = body;
+                    else sensorHandlesPosition = true;
 
                     collides = true;
                 }
 
-                if (ent.Has(typeof(Player)) && collides)
+                if (ent.Has(typeof(Player)) && collides && solid.Is_Sensor)
                 {
                     solid.Callback?.Invoke(solid);
                     if (solids.Count == 0)
@@ -216,8 +221,11 @@ namespace BeyondAge.Entities
             // TODO: Use delta time 
             physics.Velocity *= physics.Deceleration;
 
-            body.X = body_x.X;
-            body.Y = body_y.Y;
+            if (!sensorHandlesPosition)
+            {
+                body.X = body_x.X;
+                body.Y = body_y.Y;
+            }
         }
 
         public override void Draw(Entity ent, SpriteBatch batch)

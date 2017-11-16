@@ -18,7 +18,10 @@ namespace BeyondAge
         public static readonly string PlayerMoveDown    = "PlayerMoveDown";
 
         public static readonly int GridSize                 = 32;
-        public static readonly int MapSize                  = 32;
+
+        // This is sooo gross, dont do this at home kids.
+        public static int MapSize                           = 32;
+        
         public static readonly float CameraSmoothValue      = 0.075f;
         public static readonly float CameraPredictionScale  = 0.4f; // Used to point towards the players position + velocity * scale
         public static readonly float InteractionDistance    = 128 + 32;
