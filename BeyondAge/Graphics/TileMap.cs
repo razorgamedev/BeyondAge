@@ -89,6 +89,9 @@ namespace BeyondAge.Graphics
             physicsSystem.ClearSolids();
             bgEffects.Clear();
 
+            // NOTE(Dustin): Change this so that we support persistant and non persistant entities.
+            //world.DestroyAll();
+
             // Set the cameras bounds
 
             camera.Bounds = Rectangle.Empty;

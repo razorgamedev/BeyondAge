@@ -37,6 +37,9 @@ namespace BeyondAge.Entities
 
             physics.Speed = 1280;
 
+            if (BeyondAge.TheGame.Debugging)
+                physics.Speed *= 8;
+
             var dt = (float)time.ElapsedGameTime.TotalSeconds;
             
             if (GameInput.Self.KeyDown(Constants.PlayerMoveLeft))

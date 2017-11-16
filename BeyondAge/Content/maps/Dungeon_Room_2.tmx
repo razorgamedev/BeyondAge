@@ -80,9 +80,11 @@
   </data>
  </layer>
  <objectgroup name="Entities">
-  <object id="90" type="door" x="254.75" y="321.25" width="40" height="24">
+  <object id="90" type="door" x="213.25" y="508.75" width="117" height="24">
    <properties>
-    <property name="location" value="test_map"/>
+    <property name="location" value="Dungeon_Room_Tunnel"/>
+    <property name="tx" type="float" value="0"/>
+    <property name="ty" type="float" value="-1"/>
    </properties>
   </object>
  </objectgroup>
